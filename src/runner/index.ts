@@ -6,9 +6,9 @@ import { linesToRuns } from './linesToRun';
 
 export const run = (lines: Line[], path: string) => {
   const runs = linesToRuns(lines);
+  printFile('out/runs.json', runs);
   const runResult = executeRuns(runs, path);
   runResult.output.forEach(line => {
     console.log(line)
   });
-  printFile('out/runs.json', runs);
 }
