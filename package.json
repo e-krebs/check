@@ -1,0 +1,24 @@
+{
+  "name": "check",
+  "version": "0.0.0",
+  "author": "Emmanuel Krebs <e-krebs@users.noreply.github.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 17"
+  },
+  "scripts": {
+    "jest": "jest src/example/example.test.ts",
+    "test": "ts-node src/check.ts src/example/example.test.ts"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.2.129",
+    "@swc/jest": "^0.2.17",
+    "@types/jest": "^27.4.0",
+    "@types/lodash": "^4.14.178",
+    "jest": "^27.4.7",
+    "lodash": "^4.17.21",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.12.0",
+    "typescript": "^4.5.4"
+  }
+}
