@@ -42,8 +42,8 @@ You can then run the test using this new framework with `yarn check` → all tes
   - parse it into JSON using the project's own parser (output in `out/result.json`)
 - then, the runner will get the parser result and:
   - transform it into _runs_ (output in `out/runs.json`)
-    - a hierarchical representation of the tests,
-    - with code & tests being grouped in an array at the lower level
+    - a hierarchical representation of the test suites
+    - with code & tests being grouped in an array at the test level
     - this array contains the whole code & test you pass through to go to that test → they will be executed this way
   - execute those _runs_
     - using the **node vm**
@@ -51,8 +51,8 @@ You can then run the test using this new framework with `yarn check` → all tes
     - output a result in the console (cf. image above)
 
 # TODO
-- [ ] output details about errors
-  - _path_ of the error
+- [ ] output details when errors
+  - logical _path_ of the error
   - meaningful message, including comparison
   - code line (might be tricky because of transpilation)
 - [ ] test the framework using itself
@@ -61,9 +61,9 @@ You can then run the test using this new framework with `yarn check` → all tes
 - [ ] watch
 - [ ] don't use `jest` types but our own
 - [ ] mocks
-- [ ] expose commands to be used from the outside: `check example`
-  - [ ] deal with multiple files
+- [ ] deal with multiple files
   - [ ] accept a glob / pattern
+- [ ] expose commands to be used from the outside: `check example`
 - [ ] write recap at the end (nb test suites, nb tests, time, etc.)
 - [ ] publish a package
 - [ ] deal with React specificities: props, etc.
