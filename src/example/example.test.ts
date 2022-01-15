@@ -1,11 +1,11 @@
 // const { add } = require('./example');
-import { add } from './example';
+import { add, Sum } from './example';
 
 describe('sum', () => {
   let added = 1;
 
   describe('adding 1', () => {
-    const { a, b, sum } = add(added, 1);
+    const { a, b, sum }: Sum = add(added, 1);
 
     it('a: 1', () => {
       expect(a).toEqual(1);
