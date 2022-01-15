@@ -63,6 +63,7 @@ You can then run the test using this new framework with `yarn check` → all tes
 - [ ] mocks
 - [ ] deal with multiple files
   - [ ] accept a glob / pattern
+  - [ ] run multiple files in parallel
 - [ ] expose commands to be used from the outside: `check example`
 - [ ] write recap at the end (nb test suites, nb tests, time, etc.)
 - [ ] publish a package
