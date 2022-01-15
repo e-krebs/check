@@ -1,4 +1,4 @@
-interface DefaultLine {
+export interface DefaultLine {
   type: 'Default';
   items?: Line[];
 }
