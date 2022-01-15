@@ -1,6 +1,7 @@
 import { createContext, type Context } from 'vm';
 import { realpathSync } from 'fs';
-import isEqual  from 'lodash/isEqual';
+
+import { matchers, not } from './matchers';
 
 const resolvedRequire = (path: string): NodeRequire => {
   const dir = realpathSync(path.slice(0, path.lastIndexOf('/')));
@@ -21,10 +22,8 @@ export const getContext = (path: string): Context => {
     exports,
     console,
     expect: (received: string) => ({
-      toEqual: (expected: any): boolean => {
-        // TODO: do something when returning false
-        return isEqual(received, expected);
-      }
+      not: not(matchers(received)),
+      ...matchers(received)
     }),
   });
   return context;
