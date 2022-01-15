@@ -1,7 +1,8 @@
-import { writeFileSync, mkdirSync, opendirSync } from 'fs';
+import { writeFileSync, mkdirSync } from 'fs';
+import { getFolders } from './pathHelper';
 
 export const printFile = (path: string, content: any) => {
-  const folders = path.slice(0, path.lastIndexOf('/'));
+  const folders = getFolders(path);
 
   try {
     mkdirSync(folders, { recursive: true });
