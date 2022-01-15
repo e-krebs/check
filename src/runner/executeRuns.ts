@@ -1,25 +1,22 @@
-
 import { executeRunItems } from './executeRunItems';
+import { formatBranch, formatFileResult } from './formatters';
 import { isBranch, isTestBranch, type Run } from './typings';
 
-const formatBranch = (depth: number, description: string, success?: boolean): string => {
-  const output: string[] = [' '.repeat(depth * 2)];
-  if (success !== undefined) {
-    output.push(success ? '✔' : '❌');
-    output.push(' ');
-  }
-  output.push(description);
-  return output.reduce((a, b) => `${a}${b}`);
+interface RunResult {
+  output: string[];
+  success: boolean;
 }
 
-export const executeRuns = (runs: Run[], path: string, depth: number = 1): string[] => {
+export const executeRuns = (runs: Run[], path: string, depth: number = 1): RunResult => {
   let output: string[] = [];
-  let globalSuccess = true;
+  let globalSuccess: boolean = true;
 
   for (const run of runs) {
     if (isBranch(run)) {
       output.push(formatBranch(depth, run.description));
-      output.push(...executeRuns(run.branches, path, depth + 1));
+      const runResult = executeRuns(run.branches, path, depth + 1); 
+      output.push(...runResult.output);
+      globalSuccess = globalSuccess && runResult.success;
     }
     if (isTestBranch(run)) {
       const success = executeRunItems(run, path);
@@ -27,8 +24,9 @@ export const executeRuns = (runs: Run[], path: string, depth: number = 1): strin
       globalSuccess = globalSuccess && success;
     }
   }
+
   if (depth === 1) {
-    output = [` ${globalSuccess ? 'PASS' : 'FAIL'}  ${path}`, ...output];
+    output = [formatFileResult(path, globalSuccess), ...output];
   }
-  return output;
+  return { output, success: globalSuccess };
 }
