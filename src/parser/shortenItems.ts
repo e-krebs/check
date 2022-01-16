@@ -21,13 +21,19 @@ export const shortenItems = (
       switch (currentItem.type) {
         // for Code & Test items, merge them when they are consecutives
         case 'Code':
-        case 'Test':
           if (previousItem.type === currentItem.type) {
             currentItem.code = [...previousItem.code, ...currentItem.code]
             toRemove.push(i - 1);
           }
           break;
-      }
+        case 'Test':
+          if (previousItem.type === currentItem.type) {
+            currentItem.code = [...previousItem.code, ...currentItem.code]
+            currentItem.lines = [...previousItem.lines, ...currentItem.lines]
+            toRemove.push(i - 1);
+          }
+          break;
+        }
     }
 
     if (toRemove.length > 0) {
