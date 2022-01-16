@@ -54,7 +54,7 @@ You can then run the test using this new framework with `yarn check` → all tes
 - [ ] output details when errors
   - logical _path_ of the error
   - meaningful message, including comparison
-  - code line (might be tricky because of transpilation)
+  - code line (~~might be tricky because of transpilation~~ will work thx to the use of sourcemaps)
 - [ ] test the framework using itself
   - [ ] CI
 - [ ] other matchers
