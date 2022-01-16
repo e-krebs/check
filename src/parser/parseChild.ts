@@ -8,7 +8,6 @@ import { shortenItems } from './shortenItems';
 export const parseChild = (
   node: Node,
   file: SourceFile,
-  line?: Line,
 ): Line | null => {
   const children: Node[] = [];
   node.forEachChild(child => { children.push(child) });
@@ -105,7 +104,7 @@ export const parseChild = (
     }
   });
 
-  if (!line && items) {
+  if (items) {
     switch (items.length) {
       case 0:
         // if no line & no item → return nothing
@@ -116,25 +115,5 @@ export const parseChild = (
     }
   }
 
-  // '...line' will override 'type: 'Default' when not undefined
-  if (!line) {
-    return { type: 'Default', items: shortenItems(items) }
-  }
-
-  switch (line.type) {
-    case 'Code':
-    case 'Test':
-      return line;
-    case 'TestDescription':
-      return { ...line, items: shortenItems(items) ?? [] };
-    case 'TestDefinition':
-      if (line.tests) {
-        return line;
-      } else {
-        return { ...line, items: shortenItems(items) ?? [] };
-      }
-    case 'Default':
-      default:
-      return { ...line, items: shortenItems(items) };
-  }
+  return { type: 'Default', items: shortenItems(items) }
 };
