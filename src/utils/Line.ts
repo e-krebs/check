@@ -10,6 +10,7 @@ export interface CodeLine {
 export interface TestLine {
   type: 'Test';
   code: string[];
+  lines: (number | null)[];
 }
 
 export interface TestDescriptionLine {
@@ -25,6 +26,7 @@ type TestDefinitionLine = {
 } & ({
   items: undefined;
   tests: string[];
+  lines: (number | null)[];
 } | {
   items: Line[];
   tests: undefined;

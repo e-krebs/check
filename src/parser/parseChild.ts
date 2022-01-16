@@ -1,13 +1,16 @@
 import { SyntaxKind, Node, SourceFile } from 'typescript';
+import type { BasicSourceMapConsumer, IndexedSourceMapConsumer } from 'source-map';
 
 import type { Line, TestDescriptionLine, TestLine } from 'utils/Line';
 import { onlyUnique } from 'utils/onlyUnique';
 import { trimChar } from 'utils/trimChar';
 import { shortenItems } from './shortenItems';
+import { getOriginalLine } from './getOriginalLine';
 
 export const parseChild = (
   node: Node,
   file: SourceFile,
+  sourceMap: BasicSourceMapConsumer | IndexedSourceMapConsumer,
 ): Line | null => {
   const children: Node[] = [];
   node.forEachChild(child => { children.push(child) });
@@ -24,7 +27,7 @@ export const parseChild = (
     case SyntaxKind.StringLiteral:
       return {
         type: 'Code',
-        code: [code]
+        code: [code],
       };
     case SyntaxKind.CallExpression:
       // @ts-expect-error
@@ -34,6 +37,7 @@ export const parseChild = (
             return {
               type: 'Test',
               code: [code],
+              lines: [getOriginalLine(node, file, sourceMap)],
             };
           }
           return {
@@ -53,7 +57,7 @@ export const parseChild = (
             ) {
               const name = first.getText(file);
               const description = trimChar(second.getText(file));
-              const item = parseChild(third, file);
+              const item = parseChild(third, file, sourceMap);
               const items = shortenItems([item]);
 
               switch (name) {
@@ -75,6 +79,7 @@ export const parseChild = (
                         description,
                         items: undefined,
                         tests: (items as TestLine[]).map(item => item.code).flat(),
+                        lines: (items as TestLine[]).map(item => item.lines).flat(),
                       }
                     }
                   }
@@ -98,7 +103,7 @@ export const parseChild = (
   // parse child nodes
   let items: Line[] = [];
   children.forEach(child => {
-    const item = parseChild(child, file);
+    const item = parseChild(child, file, sourceMap);
     if (item !== null) {
       items.push(item);
     }
