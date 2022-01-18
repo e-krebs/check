@@ -22,6 +22,7 @@ export const isCode = (runParam: RunItem): runParam is Code =>
 
 type Test = {
   tests: string[];
+  lines: (number | null)[]
 }
 export const isTests = (runParam: RunItem): runParam is Test =>
   (runParam as Test).tests !== undefined;

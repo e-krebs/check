@@ -11,7 +11,7 @@ export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {
         stack.push(...line.code.map(code => ({ code })));
         break;
       case 'Test':
-        stack.push({ tests: line.code });
+        stack.push({ tests: line.code, lines: line.lines });
         break;
       case 'TestDescription':
         result.push({
@@ -23,7 +23,7 @@ export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {
         if (!line.items) {
           result.push({
             description: line.description,
-            items: [...stack, { tests: line.tests }],
+            items: [...stack, { tests: line.tests, lines: line.lines }],
           });
         } else {
           result.push({
