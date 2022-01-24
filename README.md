@@ -5,7 +5,7 @@ It is very raw and undocumented at this stage.
 It's an exploration at writing a test framework that addresses some of `jest`'s shortcomings (imho):
 - the automatic hoisting of imports and mocks
   - this makes it diffucult to write you own helpers on top of `jest`
-- the need to use `beforeEach` / `afterEach`
+- the need to use `beforeEach` / `afterEach` ([detailed explanation here](./examples/BEFOREEACH.md))
   - which result in the need to use convoluted syntax when you need to access something inside the `beforeEach`
 - missing matchers for React-based use-cases (probably other frameworks as well)
   - when testing a component, it's difficult to test for only _some_ props
