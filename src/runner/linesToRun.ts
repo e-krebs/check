@@ -3,7 +3,7 @@ import { Line } from 'utils/Line';
 import { type Run, type RunItem } from './typings';
 
 export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {
-  const stack: RunItem[] = [...parents];
+  let stack: RunItem[] = [...parents];
   const result: Run[] = []
   for (const line of lines) {
     switch (line.type) {
@@ -26,15 +26,26 @@ export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {
             items: [...stack, { tests: line.tests, lines: line.lines }],
           });
         } else {
-          result.push({
-            description: line.description,
-            branches: linesToRuns(line.items, stack),
-          });
+          const branches = linesToRuns(line.items, stack);
+          if (branches.length === 1 && branches[0].description === '') {
+            result.push({
+              ...branches[0],
+              description: line.description,
+            });
+          } else {
+            result.push({
+              description: line.description,
+              branches: linesToRuns(line.items, stack),
+            });
+          }
         }
         break;
       case 'Default':
         break;
     }
+  }
+  if (result.length <= 0 && stack.length > 0) {
+    result.push({ description: '', items: stack });
   }
   return result;
 }

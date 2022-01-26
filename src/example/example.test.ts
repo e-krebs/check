@@ -16,6 +16,7 @@ describe('sum', () => {
     });
 
     it('sum: 2', () => {
+      console.log('logging something');
       expect(sum).toEqual(2);
     });
   });
