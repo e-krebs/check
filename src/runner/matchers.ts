@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import isEqual from 'lodash/isEqual';
 
 type MatcherResultSuccess = { pass: true };
@@ -10,8 +11,17 @@ type MatcherFunction = (expected: any) => MatcherResultWithoutLines;
 type MatcherName = 'toEqual';
 type Matchers = Record<MatcherName, MatcherFunction>;
 
-const matcherMessage = (name: MatcherName, not = false): string =>
-  `expect(received)${not ? '.not' : ''}.${name}(expected)`;
+const matcherDescription: Record<MatcherName, string> = {
+  toEqual: 'deep equality',
+};
+
+const matcherMessage = (name: MatcherName, not = false): string => {
+  const received = chalk.red('received');
+  const fullName = chalk.white(`${not ? '.not' : ''}.${name}`);
+  const expected = chalk.green('received');
+  const description = ` // ${matcherDescription[name]}`;
+  return chalk.grey(`expect(${received})${fullName}(${expected})${description}`);
+}
 
 export const matchers = (received: string): Matchers => ({
   toEqual: (expected: any): MatcherResultWithoutLines => {
