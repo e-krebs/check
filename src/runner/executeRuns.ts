@@ -30,6 +30,7 @@ export const executeRuns = (runs: Run[], path: string, logicalPath: string[] = [
       const runResult = executeRuns(run.branches, path, [...logicalPath, run.description]); 
       output.push(...runResult.output);
       globalSuccess = globalSuccess && runResult.details.success;
+      errors.push(...runResult.details.errors);
     }
     if (isTestBranch(run)) {
       const runResult = executeRunItems(run, path);
@@ -37,7 +38,7 @@ export const executeRuns = (runs: Run[], path: string, logicalPath: string[] = [
       globalSuccess = globalSuccess && runResult.pass;
       if (!runResult.pass) {
         const { messages, lines } = runResult;
-        errors.push({ path, logicalPath, messages, lines });
+        errors.push({ path, logicalPath: [...logicalPath, run.description], messages, lines });
       }
     }
   }
