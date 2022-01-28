@@ -1,12 +1,12 @@
 import { executeRunItems } from './executeRunItems';
 import { formatBranch, formatFileResult } from './formatters';
+import { FailDetail } from './matchers';
 import { isBranch, isTestBranch, type Run } from './typings';
 
-interface RunError {
+export interface RunError {
   path: string;
   logicalPath: string[];
-  messages: string[];
-  lines: (number | null)[];
+  details: FailDetail[]
 }
 
 interface RunDetails {
@@ -37,8 +37,8 @@ export const executeRuns = (runs: Run[], path: string, logicalPath: string[] = [
       output.push(formatBranch(logicalPath.length + 1, run.description, runResult.pass));
       globalSuccess = globalSuccess && runResult.pass;
       if (!runResult.pass) {
-        const { messages, lines } = runResult;
-        errors.push({ path, logicalPath: [...logicalPath, run.description], messages, lines });
+        const { details } = runResult;
+        errors.push({ path, logicalPath: [...logicalPath, run.description], details });
       }
     }
   }
