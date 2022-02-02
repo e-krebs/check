@@ -1,23 +1,7 @@
 import { executeRunItems } from './executeRunItems';
 import { formatBranch, formatFileResult } from './formatters';
-import { FailDetail } from './matchers';
+import type { RunError, RunResult } from './RunTypings';
 import { isBranch, isTestBranch, type Run } from './typings';
-
-export interface RunError {
-  path: string;
-  logicalPath: string[];
-  details: FailDetail[]
-}
-
-interface RunDetails {
-  success: boolean;
-  errors: RunError[]
-}
-
-interface RunResult {
-  output: string[];
-  details: RunDetails;
-}
 
 export const executeRuns = (runs: Run[], path: string, logicalPath: string[] = []): RunResult => {
   let output: string[] = [];
