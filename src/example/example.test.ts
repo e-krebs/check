@@ -25,6 +25,10 @@ describe('sum', () => {
     expect(add(added, 1)).toEqual({ a: 1, b: 1, sum: 2 });
   });
 
+  it('failing test', () => {
+    expect(add(2, 1)).toEqual({ a: 1, b: 1, sum: 2 });
+  });
+
   describe('adding 0', () => {
     added = 0;
 
