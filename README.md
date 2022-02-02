@@ -51,7 +51,7 @@ You can then run the test using this new framework with `yarn check` → all tes
     - output a result in the console (cf. image above)
 
 # TODO
-- [ ] output details when errors
+- [x] output details when errors
   - logical _path_ of the error
   - meaningful message, including comparison
   - code line (~~might be tricky because of transpilation~~ will work thx to the use of sourcemaps)
@@ -64,6 +64,7 @@ You can then run the test using this new framework with `yarn check` → all tes
 - [ ] deal with multiple files
   - [ ] accept a glob / pattern
   - [ ] run multiple files in parallel
+  - [ ] output short version of success/errors when multiple files
 - [ ] expose commands to be used from the outside: `check example`
 - [ ] write recap at the end (nb test suites, nb tests, time, etc.)
 - [ ] publish a package
