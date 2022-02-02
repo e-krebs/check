@@ -19,9 +19,9 @@ const matcherDescription: Record<MatcherName, string> = {
 const matcherMessage = (name: MatcherName, not = false): string => {
   const received = chalk.red('received');
   const fullName = chalk.white(`${not ? '.not' : ''}.${name}`);
-  const expected = chalk.green('received');
+  const expected = chalk.green('expected');
   const description = ` // ${matcherDescription[name]}`;
-  return chalk.grey(`expect(${received})${fullName}(${expected})${description}`);
+  return chalk.grey(`expect(${expected})${fullName}(${received})${description}`);
 }
 
 export const matchers = (received: any): Matchers => ({
