@@ -24,7 +24,12 @@ You can then run the test using this new framework with `yarn check` → all tes
   - accepts `describe` and `it` / `test` syntax
   - `toEqual` matcher (uses `lodash`)
   - `not` function
-- prints the result in the console (uses `chalk`)
+- prints the result in the console (using `chalk`)
+
+## example of failing test
+![output](./images/failing-output.png)
+
+## check / jest comparison example
 
 | check | jest |
 |-|-|
