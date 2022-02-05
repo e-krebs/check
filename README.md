@@ -48,7 +48,8 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 
 # how it works (for now)
 - the whole thing is written in **Typescript** and runs using `ts-node` (with the currently experimental `@swc` transpiler for performance)
-- it works on a **Typescript** test file (usually `xxxx.test.ts`)
+- it works on **Typescript** test files (usually `xxxx.test.ts`)
+- each file is handled in its own thread using node's [`worker_thread`](https://nodejs.org/api/worker_threads.html)
 - first, the parser (cf. [src/parser](./src/parser)) will:
   - read the file (it must be _utf-8_)
   - transpile it (using **Typescript**) in _CommonJS_ & the _Latest_ configuration from ts
@@ -70,14 +71,15 @@ You can then run the test using this new framework with `yarn check` → 1 test 
   - meaningful message, including comparison
   - code line (~~might be tricky because of transpilation~~ will work thx to the use of sourcemaps)
 - [ ] test the framework using itself
+  - [ ] local
   - [ ] CI
 - [ ] other matchers
 - [ ] watch (including code files changes with `chokidar`)
 - [ ] don't use `jest` types but our own
 - [ ] mocks
-- [ ] deal with multiple files
+- [x] deal with multiple files
   - [x] accept a glob / pattern
-  - [ ] run multiple files in parallel
+  - [x] run multiple files in parallel
   - [x] output short version of pass/fail when multiple files
   - [x] output recap of errors if any
 - [x] read config instead of cli arguments

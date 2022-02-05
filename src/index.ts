@@ -1,9 +1,8 @@
 import { Glob } from 'glob';
 
-import { OutputLevel } from 'runner/outputLevel';
+import { type OutputLevel } from 'runner/outputLevel';
 import { getConfiguration } from 'utils/getConfiguration';
-
-import { check } from './check';
+import { checkInWorker } from './checkInWorker';
 
 const { pattern } = getConfiguration();
 new Glob(pattern, async (err, files) => {
@@ -13,7 +12,7 @@ new Glob(pattern, async (err, files) => {
   } else {
     const outputLevel: OutputLevel = files.length > 1 ? 'short' : 'detailed';
     const checks = await Promise.all(files.map(
-      async file => await check(file, outputLevel)
+      async file => await checkInWorker(file, outputLevel)
     ));
     const success: boolean = checks.reduce((a, b) => a && b);
     process.exit(success ? 0 : 1);
