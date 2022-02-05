@@ -12,11 +12,11 @@ It's an exploration at writing a test framework that addresses some of `jest`'s 
 - ...
 
 # try it out
-To try it out, clone the repository, have a look at files in the `src/example` folder: `example.ts` & `exemple.test.ts`
+To try it out, clone the repository, have a look at files in the `src/example` folder: `example.ts` & test files.
 
-You can first run the test using `jest` with `yarn jest` → one test will fail because of how `jest` execute the tests. ❌
+You can first run the test using `jest` with `yarn jest` → 3 tests will fail, 1 because it's supposed to, and 2 because of how `jest` execute the tests. ❌
 
-You can then run the test using this new framework with `yarn check` → all test will pass. ✔
+You can then run the test using this new framework with `yarn check` → 1 test will fail (it's supposed to) and all other will pass. ✔
 
 # what's included
 - one optional argument: config file path
@@ -62,7 +62,7 @@ You can then run the test using this new framework with `yarn check` → all tes
   - execute those _runs_
     - using the **node vm**
     - using a brand new context for each run to avoid side-effects
-    - output a result in the console (cf. image above)
+    - output a result in the console (cf. images above)
 
 # TODO
 - [x] output details when errors
