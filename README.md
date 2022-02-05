@@ -94,7 +94,7 @@ You can then run the test using this new framework with `yarn check` → 1 test 
   - [x] output short version of pass/fail when multiple files
   - [x] output recap of errors if any
 - [x] read config instead of cli arguments
-- [ ] expose commands to be used from the outside: `check example`
+- [x] expose commands to be used from the outside: `check example`
 - [ ] write recap at the end (nb test suites, nb tests, time, etc.)
 - [ ] publish a package
 - [ ] deal with React specificities: props, etc.
