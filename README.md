@@ -63,7 +63,7 @@ You can then run the test using this new framework with `yarn check` → all tes
 - [ ] test the framework using itself
   - [ ] CI
 - [ ] other matchers
-- [ ] watch
+- [ ] watch (including code files changes with `chokidar`)
 - [ ] don't use `jest` types but our own
 - [ ] mocks
 - [ ] deal with multiple files
