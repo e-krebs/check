@@ -4,7 +4,7 @@ import readline from 'node:readline';
 import { createReadStream } from 'fs';
 
 import { getFile, getFolders } from 'utils/pathHelper';
-import type { RunError } from './RunTypings';
+import type { RunError } from './runTypings';
 
 export const formatBranch = (depth: number, description: string, success?: boolean): string => {
   const output: string[] = [' '.repeat(depth * 2)];
@@ -81,6 +81,7 @@ const formatDiff = (expected: any, received: any): string => {
 const formatError = async (runError: RunError): Promise<string[]> => {
   const output: string[] = [];
   const logicalPath = runError.logicalPath.reduce((a, b) => `${a} > ${b}`);
+  output.push('');
   output.push(chalk.redBright(`  ● ${logicalPath}`));
   let i = 0;
   for (const detail of runError.details) {

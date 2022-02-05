@@ -1,24 +1,34 @@
 import { executeRunItems } from './executeRunItems';
 import { formatBranch, formatFileResult } from './formatters';
-import type { RunError, RunResult } from './RunTypings';
+import { OutputLevel } from './outputLevel';
+import type { RunError, RunResult } from './runTypings';
 import { isBranch, isTestBranch, type Run } from './typings';
 
-export const executeRuns = (runs: Run[], path: string, logicalPath: string[] = []): RunResult => {
+export const executeRuns = (
+  runs: Run[],
+  path: string,
+  outputLevel: OutputLevel,
+  logicalPath: string[] = []
+): RunResult => {
   let output: string[] = [];
   const errors: RunError[] = [];
   let globalSuccess: boolean = true;
 
   for (const run of runs) {
     if (isBranch(run)) {
-      output.push(formatBranch(logicalPath.length + 1, run.description));
-      const runResult = executeRuns(run.branches, path, [...logicalPath, run.description]); 
+      if (outputLevel === 'detailed') {
+        output.push(formatBranch(logicalPath.length + 1, run.description));
+      }
+      const runResult = executeRuns(run.branches, path, outputLevel, [...logicalPath, run.description]);
       output.push(...runResult.output);
       globalSuccess = globalSuccess && runResult.details.success;
       errors.push(...runResult.details.errors);
     }
     if (isTestBranch(run)) {
       const runResult = executeRunItems(run, path);
-      output.push(formatBranch(logicalPath.length + 1, run.description, runResult.pass));
+      if (outputLevel === 'detailed') {
+        output.push(formatBranch(logicalPath.length + 1, run.description, runResult.pass));
+      }
       globalSuccess = globalSuccess && runResult.pass;
       if (!runResult.pass) {
         const { details } = runResult;

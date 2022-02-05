@@ -7,7 +7,7 @@ const main = async (): Promise<void> => {
   const parsedFile = await parse(path);
   printFile('out/result.json', parsedFile);
   
-  const success = await run(parsedFile, path);
+  const success = await run(parsedFile, path, 'detailed');
   process.exit(success ? 0 : 1)
 }
 
