@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "check",
+      "path": "packages/check"
+    },
+    {
+      "name": "examples",
+      "path": "packages/examples"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "packages/**": true
+    },
+    "typescript.tsdk": "./node_modules/typescript/lib/"
+  }
+}

@@ -1,4 +1,4 @@
-import type { Line } from 'utils/Line';
+import type { Line } from '../utils/Line';
 
 export const shortenItems = (
   inputItems: (Line | null)[] | undefined

@@ -21,3 +21,5 @@ jobs:
           key: yarn-${{ hashFiles('**/yarn.lock') }}
       - run: yarn --frozen-lockfile
       - run: yarn lint
+      - run: yarn test
+      - run: yarn jest

@@ -21,7 +21,7 @@ export const getContext = (path: string): Context => {
     require: resolvedRequire(path),
     exports,
     console,
-    expect: (received: string) => ({
+    expect: (received: object) => ({
       not: not(matchers(received)),
       ...matchers(received)
     }),

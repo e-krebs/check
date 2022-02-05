@@ -1,5 +1,5 @@
 
-import { Line } from 'utils/Line';
+import { Line } from '../utils/Line';
 import { type Run, type RunItem } from './typings';
 
 export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {

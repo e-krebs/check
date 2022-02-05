@@ -1,9 +1,9 @@
 import { SyntaxKind, Node, SourceFile } from 'typescript';
 import type { BasicSourceMapConsumer, IndexedSourceMapConsumer } from 'source-map';
 
-import type { Line, TestDescriptionLine, TestLine } from 'utils/Line';
-import { onlyUnique } from 'utils/onlyUnique';
-import { trimChar } from 'utils/trimChar';
+import type { Line, TestDescriptionLine, TestLine } from '../utils/Line';
+import { onlyUnique } from '../utils/onlyUnique';
+import { trimChar } from '../utils/trimChar';
 import { shortenItems } from './shortenItems';
 import { getOriginalLine } from './getOriginalLine';
 

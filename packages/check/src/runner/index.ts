@@ -1,6 +1,6 @@
 
-import type { Line } from 'utils/Line';
-import { printFile } from 'utils/printFile';
+import type { Line } from '../utils/Line';
+import { printFile } from '../utils/printFile';
 import { executeRuns } from './executeRuns';
 import { linesToRuns } from './linesToRun';
 import type { OutputLevel } from './outputLevel';

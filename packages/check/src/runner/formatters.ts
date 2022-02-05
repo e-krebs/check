@@ -3,7 +3,7 @@ import { diffJson } from 'diff';
 import readline from 'node:readline';
 import { createReadStream } from 'fs';
 
-import { getFile, getFolders } from 'utils/pathHelper';
+import { getFile, getFolders } from '../utils/pathHelper';
 import type { RunError } from './runTypings';
 
 export const formatBranch = (depth: number, description: string, success?: boolean): string => {

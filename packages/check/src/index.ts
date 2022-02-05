@@ -1,8 +1,8 @@
 import { Glob } from 'glob';
 import { config } from 'dotenv';
 
-import { type OutputLevel } from 'runner/outputLevel';
-import { getConfiguration } from 'utils/getConfiguration';
+import { type OutputLevel } from './runner/outputLevel';
+import { getConfiguration } from './utils/getConfiguration';
 import { checkInWorker } from './checkInWorker';
 
 config();

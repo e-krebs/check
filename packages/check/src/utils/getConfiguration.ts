@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'fs';
 import chalk from 'chalk';
 
-import { type Configuration, ConfigurationModel } from 'models/configuration';
+import { type Configuration, ConfigurationModel } from '../models/configuration';
 
 export const getConfiguration = (): Configuration => {
   let config: unknown = {};

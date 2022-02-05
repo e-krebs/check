@@ -5,7 +5,7 @@ import { readFileSync } from 'fs';
 import { SourceMapConsumer } from 'source-map';
 
 import { parseTestFile } from './parseTestFile';
-import type { Line } from 'utils/Line';
+import type { Line } from '../utils/Line';
 
 const target = ScriptTarget.Latest;
 
