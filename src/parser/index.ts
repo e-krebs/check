@@ -1,4 +1,6 @@
-import { createSourceFile, ModuleKind, ScriptTarget, transpileModule, type SourceFile } from 'typescript';
+import {
+  createSourceFile, ModuleKind, ScriptTarget, transpileModule, type SourceFile
+} from 'typescript';
 import { readFileSync } from 'fs';
 import { SourceMapConsumer } from 'source-map';
 
@@ -22,9 +24,12 @@ export const parse = async (path: string): Promise<Line[]> => {
   );
   const file: SourceFile = createSourceFile('unique.ts', transpiled.outputText, target);
 
-  const sourceMap = await new SourceMapConsumer(transpiled.sourceMapText!);
-  const parsed = parseTestFile(file, sourceMap);
-  sourceMap.destroy();
+  const parsed: Line[] = [];
+  if (transpiled.sourceMapText) {
+    const sourceMap = await new SourceMapConsumer(transpiled.sourceMapText);
+    parsed.push(...parseTestFile(file, sourceMap));
+    sourceMap.destroy();
+  }
 
   return parsed;
-}
+};

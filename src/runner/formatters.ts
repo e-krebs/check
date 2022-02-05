@@ -11,12 +11,12 @@ export const formatBranch = (depth: number, description: string, success?: boole
   if (success !== undefined) {
     output.push(success ? chalk.green('√') : chalk.red('×'));
     output.push(' ');
-    output.push(chalk.grey(description))
+    output.push(chalk.grey(description));
   } else {
     output.push(description);
   }
   return output.reduce((a, b) => `${a}${b}`);
-}
+};
 
 export const formatFileResult = (path: string, success: boolean): string => {
   const output: string[] = [];
@@ -28,7 +28,7 @@ export const formatFileResult = (path: string, success: boolean): string => {
   output.push(chalk.grey(getFolders(path)));
   output.push(getFile(path));
   return output.reduce((a, b) => `${a}${b}`);
-}
+};
 
 const formatCodeLines = async (path: string, testLine: number): Promise<string[]> => {
   const output: string[] = [];
@@ -41,7 +41,7 @@ const formatCodeLines = async (path: string, testLine: number): Promise<string[]
   }
 
   const lineReader = readline.createInterface({ input: createReadStream(path) });
-  var lineNumber = 0;
+  let lineNumber = 0;
   for await (const line of lineReader) {
     lineNumber++;
     if (lines.includes(lineNumber)) {
@@ -52,16 +52,16 @@ const formatCodeLines = async (path: string, testLine: number): Promise<string[]
       output.push(`${head}${body}`);
     }
     if (lineNumber > Math.max(...lines)) lineReader.close();
-  };
+  }
 
   output.push('');
   output.push(`    ${chalk.grey('at')} ${chalk.cyan(path)}${chalk.grey(`:${testLine}`)}`);
   output.push('');
 
   return output;
-}
+};
 
-const formatDiff = (expected: any, received: any): string => {
+const formatDiff = (expected: object, received: object): string => {
   const diffs = diffJson(expected, received);
 
   const output: string[] = [];
@@ -92,10 +92,10 @@ const formatError = async (runError: RunError): Promise<string[]> => {
       output.push('');
       output.push(...await formatCodeLines(runError.path, detail.line));
     }
-    i++;
+    i = i + 1;
   }
   return output;
-}
+};
 
 export const formatErrors = async (runErrors: RunError[]): Promise<string[]> => (
   await Promise.all(runErrors.map(

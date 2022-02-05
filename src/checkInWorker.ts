@@ -1,4 +1,5 @@
 import { Worker } from 'worker_threads';
+
 import { type OutputLevel } from 'runner/outputLevel';
 
 export const checkInWorker = (file: string, outputLevel: OutputLevel): Promise<boolean> => {
@@ -14,7 +15,7 @@ export const checkInWorker = (file: string, outputLevel: OutputLevel): Promise<b
 
     worker.once(
       'message',
-      (result: boolean) => { success = result }
+      (result: boolean) => { success = result; }
     );
 
     worker.on(

@@ -13,12 +13,9 @@ export const parseChild = (
   sourceMap: BasicSourceMapConsumer | IndexedSourceMapConsumer,
 ): Line | null => {
   const children: Node[] = [];
-  node.forEachChild(child => { children.push(child) });
+  node.forEachChild(child => { children.push(child); });
 
   const code = node.getText(file);
-
-  // // @ts-expect-error
-  // console.log(SyntaxKind[node.kind], node.transformFlags, code.split(' ')[0], children.map(child => SyntaxKind[child.kind]));
 
   switch (node.kind) {
     case SyntaxKind.ImportDeclaration:
@@ -30,7 +27,7 @@ export const parseChild = (
         code: [code],
       };
     case SyntaxKind.CallExpression:
-      // @ts-expect-error
+      // @ts-expect-error node typing does not exist yet
       switch (node.transformFlags) {
         case 0:
           if (code.indexOf('expect(') === 0) {
@@ -43,7 +40,7 @@ export const parseChild = (
           return {
             type: 'Code',
             code: [code],
-          }
+          };
         case 512:
         case 513:
           // if the node children are: [Identifier, StringLiteral, ArrowFunction]
@@ -80,7 +77,7 @@ export const parseChild = (
                         items: undefined,
                         tests: (items as TestLine[]).map(item => item.code).flat(),
                         lines: (items as TestLine[]).map(item => item.lines).flat(),
-                      }
+                      };
                     }
                   }
                   return {
@@ -89,7 +86,7 @@ export const parseChild = (
                     description,
                     items: items ?? [],
                     tests: undefined,
-                  }
+                  };
               }
             }
           }
@@ -101,7 +98,7 @@ export const parseChild = (
   if (children.length <= 0) return null;
 
   // parse child nodes
-  let items: Line[] = [];
+  const items: Line[] = [];
   children.forEach(child => {
     const item = parseChild(child, file, sourceMap);
     if (item !== null) {
@@ -120,5 +117,5 @@ export const parseChild = (
     }
   }
 
-  return { type: 'Default', items: shortenItems(items) }
+  return { type: 'Default', items: shortenItems(items) };
 };

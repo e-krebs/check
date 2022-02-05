@@ -6,7 +6,9 @@ export const getOriginalLine = (
   file: SourceFile,
   sourceMap: BasicSourceMapConsumer | IndexedSourceMapConsumer
 ): number | null => {
-  const { line: sourceMapLine, character: sourceMapColumn } = file.getLineAndCharacterOfPosition(node.pos);
-  const { line: originalLine } = sourceMap.originalPositionFor({ line: sourceMapLine + 1, column: sourceMapColumn });
+  const { line: sourceMapLine, character: sourceMapColumn } =
+    file.getLineAndCharacterOfPosition(node.pos);
+  const { line: originalLine } =
+    sourceMap.originalPositionFor({ line: sourceMapLine + 1, column: sourceMapColumn });
   return originalLine ? originalLine + 1 : null;
-}
+};

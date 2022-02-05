@@ -8,4 +8,4 @@ export const check = async (path: string, outputLevel: OutputLevel): Promise<boo
   printFile(`out/${path}-result.json`, parsedFile);
   
   return await run(parsedFile, path, outputLevel);
-}
+};

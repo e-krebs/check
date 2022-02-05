@@ -13,7 +13,9 @@ export const getConfiguration = (): Configuration => {
       const configFile = readFileSync(path, 'utf-8');
       config = JSON.parse(configFile);
     } else {
-      console.warn(chalk.yellowBright(`File ${chalk.bgYellowBright.black(path)} doesn't exist, using default configuration`))
+      console.warn(chalk.yellowBright(
+        `File ${chalk.bgYellowBright.black(path)} doesn't exist, using default configuration`
+      ));
     }
   } catch (e) {
     console.error(`${chalk.red('Error while reading config file')} ${chalk.bgRed(path)}`);
@@ -21,8 +23,11 @@ export const getConfiguration = (): Configuration => {
 
   const result = ConfigurationModel.safeParse(config);
   if (!result.success) {
-    console.error(`${chalk.red('Error while parsing config file')} ${chalk.bgRed(path)}`, result.error.errors);
+    console.error(
+      `${chalk.red('Error while parsing config file')} ${chalk.bgRed(path)}`,
+      result.error.errors
+    );
     process.exit(1);
   }
   return result.data;
-}
+};

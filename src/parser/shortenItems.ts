@@ -19,17 +19,17 @@ export const shortenItems = (
       const previousItem = items[i - 1];
 
       switch (currentItem.type) {
-        // for Code & Test items, merge them when they are consecutives
+        // for Code & Test items, merge them when they are consecutive
         case 'Code':
           if (previousItem.type === currentItem.type) {
-            currentItem.code = [...previousItem.code, ...currentItem.code]
+            currentItem.code = [...previousItem.code, ...currentItem.code];
             toRemove.push(i - 1);
           }
           break;
         case 'Test':
           if (previousItem.type === currentItem.type) {
-            currentItem.code = [...previousItem.code, ...currentItem.code]
-            currentItem.lines = [...previousItem.lines, ...currentItem.lines]
+            currentItem.code = [...previousItem.code, ...currentItem.code];
+            currentItem.lines = [...previousItem.lines, ...currentItem.lines];
             toRemove.push(i - 1);
           }
           break;
@@ -39,10 +39,10 @@ export const shortenItems = (
     if (toRemove.length > 0) {
       // remove from the end to avoid changing index of next items to remove
       toRemove.reverse().map(index => {
-        items!.splice(index, 1);
-      })
+        items?.splice(index, 1);
+      });
     }
   }
 
   return items;
-}
+};

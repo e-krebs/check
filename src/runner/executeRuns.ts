@@ -12,14 +12,19 @@ export const executeRuns = (
 ): RunResult => {
   let output: string[] = [];
   const errors: RunError[] = [];
-  let globalSuccess: boolean = true;
+  let globalSuccess = true;
 
   for (const run of runs) {
     if (isBranch(run)) {
       if (outputLevel === 'detailed') {
         output.push(formatBranch(logicalPath.length + 1, run.description));
       }
-      const runResult = executeRuns(run.branches, path, outputLevel, [...logicalPath, run.description]);
+      const runResult = executeRuns(
+        run.branches,
+        path,
+        outputLevel,
+        [...logicalPath, run.description]
+      );
       output.push(...runResult.output);
       globalSuccess = globalSuccess && runResult.details.success;
       errors.push(...runResult.details.errors);
@@ -41,4 +46,4 @@ export const executeRuns = (
     output = [formatFileResult(path, globalSuccess), ...output];
   }
   return { output, details: { errors, success: globalSuccess } };
-}
+};

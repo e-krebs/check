@@ -17,4 +17,4 @@ export const run = async (
   await printRunResult(runResult);
 
   return runResult.details.success;
-}
+};

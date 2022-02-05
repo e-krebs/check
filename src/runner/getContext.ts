@@ -14,7 +14,7 @@ const resolvedRequire = (path: string): NodeRequire => {
   res.extensions = require.extensions;
   res.main = require.main;
   return res;
-}
+};
 
 export const getContext = (path: string): Context => {
   const context = createContext({

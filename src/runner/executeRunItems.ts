@@ -15,7 +15,7 @@ const runTests = (tests: string[], context: Context): MatcherResultWithoutLines 
     }
   }
   return pass ? { pass: true } : { pass: false, details };
-}
+};
 
 export const executeRunItems = (
   testBranch: TestBranch,
@@ -23,7 +23,6 @@ export const executeRunItems = (
 ): MatcherResult => {
   let pass = true;
   const details: FailDetail[] = [];
-  const lines: (number | null)[] = [];
   const context = getContext(path);
 
   for (const runItem of testBranch.items) {
@@ -35,10 +34,10 @@ export const executeRunItems = (
       pass = pass && testResult.pass;
       if (!testResult.pass && testResult.details.length > 0) {
         for (let i = 0; i < testResult.details.length; i++) {
-          details.push({ ...testResult.details[i], line: runItem.lines[i] })
+          details.push({ ...testResult.details[i], line: runItem.lines[i] });
         }
       }
     }
   }
   return pass ? { pass: true } : { pass: false, details };
-}
+};

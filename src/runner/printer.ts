@@ -1,11 +1,12 @@
-import type { RunResult } from './RunTypings';
+import type { RunResult } from './runTypings';
 import { formatErrors } from './formatters';
 
 const printLines = (lines: string[]) => {
   lines.forEach(line => {
+    // eslint-disable-next-line no-console
     console.log(line);
   });
-}
+};
 
 export const printRunResult = async (runResult: RunResult): Promise<void> => {
   printLines(runResult.output);
@@ -14,4 +15,4 @@ export const printRunResult = async (runResult: RunResult): Promise<void> => {
     const errors = await formatErrors(runResult.details.errors);
     printLines(errors);
   }
-}
+};

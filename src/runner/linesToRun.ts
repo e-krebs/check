@@ -3,8 +3,8 @@ import { Line } from 'utils/Line';
 import { type Run, type RunItem } from './typings';
 
 export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {
-  let stack: RunItem[] = [...parents];
-  const result: Run[] = []
+  const stack: RunItem[] = [...parents];
+  const result: Run[] = [];
   for (const line of lines) {
     switch (line.type) {
       case 'Code':
@@ -48,4 +48,4 @@ export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {
     result.push({ description: '', items: stack });
   }
   return result;
-}
+};

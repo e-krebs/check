@@ -2,13 +2,20 @@ import chalk from 'chalk';
 import isEqual from 'lodash/isEqual';
 
 type MatcherResultSuccess = { pass: true };
-export type FailDetail = { message: string; line: number | null; expected: any; received: any; }
+export type FailDetail = {
+  message: string;
+  line: number | null;
+  expected: object;
+  received: object;
+}
 type MatcherResultFail<Fail extends object = FailDetail> = { pass: false, details: Fail[] };
 
-export type MatcherResultWithoutLines = MatcherResultSuccess | MatcherResultFail<Omit<FailDetail, 'line'>>;
+export type MatcherResultWithoutLines =
+  MatcherResultSuccess |
+  MatcherResultFail<Omit<FailDetail, 'line'>>;
 export type MatcherResult = MatcherResultSuccess | MatcherResultFail;
 
-type MatcherFunction = (expected: any) => MatcherResultWithoutLines;
+type MatcherFunction = (expected: object) => MatcherResultWithoutLines;
 type MatcherName = 'toEqual';
 type Matchers = Record<MatcherName, MatcherFunction>;
 
@@ -22,10 +29,10 @@ const matcherMessage = (name: MatcherName, not = false): string => {
   const expected = chalk.green('expected');
   const description = ` // ${matcherDescription[name]}`;
   return chalk.grey(`expect(${expected})${fullName}(${received})${description}`);
-}
+};
 
-export const matchers = (received: any): Matchers => ({
-  toEqual: (expected: any): MatcherResultWithoutLines => {
+export const matchers = (received: object): Matchers => ({
+  toEqual: (expected: object): MatcherResultWithoutLines => {
     const pass = isEqual(received, expected);
     if (pass) return { pass: true };
     return {
@@ -42,7 +49,7 @@ export const matchers = (received: any): Matchers => ({
 export const not = (matchers: Matchers): Matchers => {
   const notMatchers: Partial<Matchers> = {};
   for (const matcherName in matchers) {
-    notMatchers[(matcherName as MatcherName)] = (expected: any) => {
+    notMatchers[(matcherName as MatcherName)] = (expected: object) => {
       const pass = !matchers[matcherName as MatcherName](expected);
       if (pass) return { pass: true };
       return {
@@ -55,4 +62,4 @@ export const not = (matchers: Matchers): Matchers => {
     };
   }
   return notMatchers as Matchers;
-}
+};

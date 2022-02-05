@@ -4,4 +4,4 @@ export const trimChar = (string: string, char: '\'' = '\''): string => {
   // $     end of the string
   const regex = new RegExp(`^[${char}]+|[${char}]+$`, 'g');
   return string.replace(regex, '');
-}
+};
