@@ -19,15 +19,24 @@ You can first run the test using `jest` with `yarn jest` → one test will fail 
 You can then run the test using this new framework with `yarn check` → all test will pass. ✔
 
 # what's included
-- accepts only one file **path** as an input
-- in that test file
+- one optional argument: config file path
+  - defaults to `check.config.json`
+  - if the config file is not present, use the default config
+- config accepts:
+  - a **glob pattern** (default: `**/*.test.ts`)
+- tests are run synchronously (no watch mode yet)
+- in test files
   - accepts `describe` and `it` / `test` syntax
   - `toEqual` matcher (uses `lodash`)
   - `not` function
 - prints the result in the console (using `chalk`)
+  - if only one test file, prints global result (PASS/FAIL), detailed tests tree & errors
+  - if multiple test files, prints global result (PASS/FAIL) & errors for each file (no detailed tests tree)
 
-## example of failing test
-![output](./images/failing-output.png)
+## example of test outputs
+| multiple files | single file (PASS) | single file (FAIL) |
+|-|-|-|
+| ![multiple](./images/multiple-output.png) | ![single pass](./images/single-pass-output.png) | ![single fail](./images/single-fail-output.png) |
 
 ## check / jest comparison example
 
@@ -39,10 +48,10 @@ You can then run the test using this new framework with `yarn check` → all tes
 
 # how it works (for now)
 - the whole thing is written in **Typescript** and runs using `ts-node` (with the currently experimental `@swc` transpiler for performance)
-- it works on a **Typescript** test file
+- it works on a **Typescript** test file (usually `xxxx.test.ts`)
 - first, the parser (cf. [src/parser](./src/parser)) will:
   - read the file (it must be _utf-8_)
-  - transpile it (using **Typescript**) in _CommonJS_ & the _Latest_ configuratino from ts
+  - transpile it (using **Typescript**) in _CommonJS_ & the _Latest_ configuration from ts
   - get the transpiled file tree (using **Typescript**'s `createSourceFile`)
   - parse it into JSON using the project's own parser (output in `out/result.json`)
 - then, the runner will get the parser result and:
@@ -71,8 +80,9 @@ You can then run the test using this new framework with `yarn check` → all tes
   - [ ] run multiple files in parallel
   - [x] output short version of pass/fail when multiple files
   - [x] output recap of errors if any
-- [ ] read config instead of cli arguments
+- [x] read config instead of cli arguments
 - [ ] expose commands to be used from the outside: `check example`
 - [ ] write recap at the end (nb test suites, nb tests, time, etc.)
 - [ ] publish a package
 - [ ] deal with React specificities: props, etc.
+- [ ] dev experience: can interactively set pattern, etc.
