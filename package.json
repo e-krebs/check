@@ -1,5 +1,6 @@
 {
   "name": "check",
+  "private": true,
   "version": "0.0.0",
   "author": "Emmanuel Krebs <e-krebs@users.noreply.github.com>",
   "license": "MIT",
@@ -11,7 +12,7 @@
     "test": "ts-node src"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.129",
+    "@swc/core": "^1.2.136",
     "@swc/jest": "^0.2.17",
     "@types/diff": "^5.0.2",
     "@types/glob": "^7.2.0",
@@ -22,12 +23,12 @@
     "chalk": "^4.1.2",
     "diff": "^5.0.0",
     "glob": "^7.2.0",
-    "jest": "^27.4.7",
+    "jest": "^27.5.0",
     "lodash": "^4.17.21",
     "source-map": "^0.7.3",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.12.0",
-    "typescript": "^4.5.4",
+    "typescript": "^4.5.5",
     "zod": "^3.11.6"
   }
 }
