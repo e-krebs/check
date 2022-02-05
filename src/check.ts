@@ -1,14 +1,11 @@
 import { parse } from 'parser';
 import { run } from 'runner';
+import type { OutputLevel } from 'runner/outputLevel';
 import { printFile } from 'utils/printFile';
 
-const main = async (): Promise<void> => {
-  const path = process.argv.slice(2)[0];
+export const check = async (path: string, outputLevel: OutputLevel): Promise<boolean> => {
   const parsedFile = await parse(path);
   printFile('out/result.json', parsedFile);
   
-  const success = await run(parsedFile, path, 'detailed');
-  process.exit(success ? 0 : 1)
+  return await run(parsedFile, path, outputLevel);
 }
-
-main();
