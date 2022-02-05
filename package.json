@@ -8,7 +8,7 @@
   },
   "scripts": {
     "jest": "jest",
-    "test": "ts-node src src/**/*.test.ts"
+    "test": "ts-node src"
   },
   "devDependencies": {
     "@swc/core": "^1.2.129",
@@ -27,6 +27,7 @@
     "source-map": "^0.7.3",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.12.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "zod": "^3.11.6"
   }
 }
