@@ -11,6 +11,12 @@ It's an exploration at writing a test framework that addresses some of `jest`'s 
   - when testing a component, it's difficult to test for only _some_ props
 - ...
 
+# setup
+install dependencies by running
+`yarn`
+
+create your `.env` file by copying `.env.sample` [details here](#.env)
+
 # try it out
 To try it out, clone the repository, have a look at files in the `src/example` folder: `example.ts` & test files.
 
@@ -54,9 +60,9 @@ You can then run the test using this new framework with `yarn check` → 1 test 
   - read the file (it must be _utf-8_)
   - transpile it (using **Typescript**) in _CommonJS_ & the _Latest_ configuration from ts
   - get the transpiled file tree (using **Typescript**'s `createSourceFile`)
-  - parse it into JSON using the project's own parser (output in `out/result.json`)
+  - parse it into JSON using the project's own parser (output in `out/****-result.json` if `WRITE_DEBUG_FILES` is set)
 - then, the runner will get the parser result and:
-  - transform it into _runs_ (output in `out/runs.json`)
+  - transform it into _runs_ (output in `out/****-runs.json` if `WRITE_DEBUG_FILES` is set)
     - a hierarchical representation of the test suites
     - with code & tests being grouped in an array at the test level
     - this array contains the whole code & test you pass through to go to that test → they will be executed this way
@@ -64,6 +70,11 @@ You can then run the test using this new framework with `yarn check` → 1 test 
     - using the **node vm**
     - using a brand new context for each run to avoid side-effects
     - output a result in the console (cf. images above)
+
+# .env
+| name | meaning |
+|-|-|
+| `WRITE_DEBUG_FILES` | `true` → write debug files (`result.json` & `runs.json`) in the `out` folder |
 
 # TODO
 - [x] output details when errors
@@ -88,4 +99,4 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 - [ ] publish a package
 - [ ] deal with React specificities: props, etc.
 - [ ] dev experience: can interactively set pattern, etc.
-- [ ] only write debug json files when env var set
+- [x] only write debug json files when env var set

@@ -12,7 +12,7 @@ export const run = async (
   outputLevel: OutputLevel
 ): Promise<boolean> => {
   const runs = linesToRuns(lines);
-  printFile('out/runs.json', runs);
+  printFile(`out/${path}-runs.json`, runs);
   const runResult = executeRuns(runs, path, outputLevel);
   await printRunResult(runResult);
 

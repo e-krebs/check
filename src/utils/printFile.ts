@@ -2,6 +2,10 @@ import { writeFileSync, mkdirSync } from 'fs';
 import { getFolders } from './pathHelper';
 
 export const printFile = (path: string, content: any) => {
+  if (process.env.WRITE_DEBUG_FILES !== 'true') {
+    return;
+  }
+
   const folders = getFolders(path);
 
   try {

@@ -5,7 +5,7 @@ import { printFile } from 'utils/printFile';
 
 export const check = async (path: string, outputLevel: OutputLevel): Promise<boolean> => {
   const parsedFile = await parse(path);
-  printFile('out/result.json', parsedFile);
+  printFile(`out/${path}-result.json`, parsedFile);
   
   return await run(parsedFile, path, outputLevel);
 }
