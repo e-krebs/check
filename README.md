@@ -86,3 +86,4 @@ You can then run the test using this new framework with `yarn check` → all tes
 - [ ] publish a package
 - [ ] deal with React specificities: props, etc.
 - [ ] dev experience: can interactively set pattern, etc.
+- [ ] only write debug json files when env var set
