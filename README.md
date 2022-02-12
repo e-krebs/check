@@ -1,3 +1,5 @@
+[![CI](https://github.com/e-krebs/check/actions/workflows/ci.yml/badge.svg)](https://github.com/e-krebs/check/actions/workflows/ci.yml)
+
 # Global idea
 Check is a **personal** project for now.
 It is very raw and undocumented at this stage.
