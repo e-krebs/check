@@ -11,7 +11,7 @@
     "lint": "eslint --ext .ts,.js src"
   },
   "bin": {
-    "check": "./cli.ts"
+    "check": "./src/cli.ts"
   },
   "devDependencies": {
     "@types/diff": "^5.0.2",
