@@ -20,6 +20,7 @@ jobs:
           path: '**/node_modules'
           key: yarn-${{ hashFiles('**/yarn.lock') }}
       - run: yarn --frozen-lockfile
+      - run: yarn type-check
       - run: yarn lint
       - name: test with check
         run: yarn test

@@ -8,6 +8,7 @@
     "node": ">= 17"
   },
   "scripts": {
+    "type-check": "tsc --noEmit",
     "test": "check",
     "jest": "jest"
   },
@@ -16,6 +17,7 @@
     "@swc/jest": "^0.2.17",
     "@types/jest": "^27.4.0",
     "check-core": "0.0.0",
-    "jest": "^27.5.0"
+    "jest": "^27.5.0",
+    "typescript": "^4.5.5"
   }
 }
