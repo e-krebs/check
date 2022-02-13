@@ -15,6 +15,7 @@
     "check": "./src/cli.ts"
   },
   "devDependencies": {
+    "@types/better-queue": "^3.8.3",
     "@types/diff": "^5.0.2",
     "@types/glob": "^7.2.0",
     "@types/lodash": "^4.14.178",
@@ -22,6 +23,7 @@
     "@types/source-map": "^0.5.7",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
+    "better-queue": "^3.8.10",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "diff": "^5.0.0",
