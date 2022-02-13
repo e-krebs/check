@@ -27,11 +27,21 @@ You can first run the test using `jest` with `yarn jest` → 3 tests will fail, 
 You can then run the test using this new framework with `yarn check` → 1 test will fail (it's supposed to) and all other will pass. ✔
 
 # what's included
-- one optional argument: config file path
-  - defaults to `check.config.json`
-  - if the config file is not present, use the default config
-- config accepts:
-  - a **glob pattern** (default: `**/*.test.ts`)
+## CLI (all arguments are optional)
+
+| argument | default value | meaning |
+|-|-|-|
+| _configuration file path_ | `check.config.json` | cf. below |
+| `--watch` | false | will watch for file changes to re-trigger tests |
+
+## Configuration file (optional)
+
+| parameter | default value | meaning |
+|-|-|-|
+| `pattern` | `**/*.test.ts` | the pattern to get the test files to run |
+
+## Other
+
 - tests are run synchronously (no watch mode yet)
 - in test files
   - accepts `describe` and `it` / `test` syntax
@@ -88,6 +98,8 @@ You can then run the test using this new framework with `yarn check` → 1 test 
   - [ ] CI
 - [ ] other matchers
 - [ ] watch (including code files changes with `chokidar`)
+  - [x] watch & cancel running tests if necessary
+  - [ ] allow to configure watched files pattern & ignored files
 - [ ] don't use `jest` types but our own
 - [ ] mocks
 - [x] deal with multiple files
