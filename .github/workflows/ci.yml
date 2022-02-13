@@ -21,9 +21,9 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: |
-            **/node_modules
+            **/node_modules/*
             !**/node_modules/check*
-          key: yarn-v2-${{ hashFiles('**/yarn.lock') }}
+          key: yarn-v3-${{ hashFiles('**/yarn.lock') }}
       - run: yarn --frozen-lockfile
       - run: yarn type-check
       - run: yarn lint
