@@ -1,3 +1,5 @@
 {
-  "testFilesPattern": "src/**/*.test.ts"
+  "testFilesPattern": "src/**/*.test.ts",
+  "watchFilesPattern": "src/**/*",
+  "watchFilesIgnored": []
 }

@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { type OutputLevel } from '../utils/outputLevel';
 import { checkInWorker } from '../checkInWorker';
 import { globs } from './globs';
+import { getConfiguration } from '../utils/getConfiguration';
 
 interface QueueItem {
   path: string;
@@ -29,9 +30,10 @@ export const tasker = () => {
   });
 
   // watcher source file
-  const watcher = watchFn('./**/*', {
+  const { watchFilesPattern, watchFilesIgnored } = getConfiguration();
+  const watcher = watchFn(watchFilesPattern, {
     persistent: true,
-    ignored: ['node_modules', '.git']
+    ignored: watchFilesIgnored
   });
 
   watcher

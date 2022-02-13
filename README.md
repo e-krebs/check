@@ -39,6 +39,8 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 | parameter | default value | meaning |
 |-|-|-|
 | `testFilesPattern` | `**/*.test.ts` | the pattern to get the test files to run |
+| `watchFilesPattern` | `**/*` | _(watch mode only)_ the pattern to get the files to watch |
+| `watchFilesIgnored` | `['node_modules', '.git']` | _(watch mode only)_ files or folder not to watch |
 
 ## Other
 
@@ -94,12 +96,10 @@ You can then run the test using this new framework with `yarn check` → 1 test 
   - meaningful message, including comparison
   - code line (~~might be tricky because of transpilation~~ will work thx to the use of sourcemaps)
 - [ ] test the framework using itself
-  - [ ] local
-  - [ ] CI
 - [ ] other matchers
-- [ ] watch (including code files changes with `chokidar`)
+- [x] watch (including code files changes with `chokidar`)
   - [x] watch & cancel running tests if necessary
-  - [ ] allow to configure watched files pattern & ignored files
+  - [x] allow to configure watched files pattern & ignored files
 - [ ] don't use `jest` types but our own
 - [ ] mocks
 - [x] deal with multiple files
