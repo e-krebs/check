@@ -3,7 +3,6 @@ import { formatErrors } from './formatters';
 
 const printLines = (lines: string[]) => {
   lines.forEach(line => {
-    // eslint-disable-next-line no-console
     console.log(line);
   });
 };
