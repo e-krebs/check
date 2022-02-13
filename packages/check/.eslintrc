@@ -46,7 +46,6 @@
         "ignoreRestSiblings": true
       }
     ],
-    "node/process-exit-as-throw": "alaways",
     "quotes": [
       "error",
       "single"

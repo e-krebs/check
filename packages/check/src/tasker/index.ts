@@ -53,6 +53,7 @@ export const runTests = async (queue?: Queue) => {
         `No test file matches "${chalk.bgYellowBright.black(testFilesPattern)}", stopping...`
       ));
       process.exit(1);
+      break;
     }
     case 1:
       outputLevel = 'detailed';
