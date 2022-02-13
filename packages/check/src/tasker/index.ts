@@ -44,7 +44,20 @@ export const tasker = () => {
 
 export const runTests = async (queue?: Queue) => {
   const files = await globs();
-  const outputLevel: OutputLevel = files.length > 1 ? 'short' : 'detailed';
+  let outputLevel: OutputLevel = 'short';
+
+  switch (files.length) {
+    case 0: {
+      const { testFilesPattern } = getConfiguration();
+      console.error(chalk.yellowBright(
+        `No test file matches "${chalk.bgYellowBright.black(testFilesPattern)}", stopping...`
+      ));
+      process.exit(1);
+    }
+    case 1:
+      outputLevel = 'detailed';
+      break;
+  }
 
   if (queue) {
     // running asynchronously (through the queue)
