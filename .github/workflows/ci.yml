@@ -18,13 +18,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '17'
-      - uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules/*
-            !**/node_modules/check-core
-            !**/node_modules/check-examples
-          key: yarn-v4-${{ hashFiles('**/yarn.lock') }}
+          cache: 'yarn'
       - run: yarn --frozen-lockfile
       - run: yarn type-check
       - run: yarn lint
