@@ -1,6 +1,6 @@
 import { executeRunItems } from './executeRunItems';
 import { formatBranch, formatFileResult } from './formatters';
-import { OutputLevel } from './outputLevel';
+import { OutputLevel } from '../utils/outputLevel';
 import type { RunError, RunResult } from './runTypings';
 import { isBranch, isTestBranch, type Run } from './typings';
 
