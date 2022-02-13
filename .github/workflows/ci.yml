@@ -20,11 +20,11 @@ jobs:
           node-version: '17'
       - uses: actions/cache@v2
         with:
-          path: '**/node_modules'
-          key: yarn-v1-${{ hashFiles('**/yarn.lock') }}
+          path: |
+            **/node_modules
+            !**/node_modules/check*
+          key: yarn-v2-${{ hashFiles('**/yarn.lock') }}
       - run: yarn --frozen-lockfile
-      - name: execution permission in case of cache
-        run: sudo chmod +x /bin/sh
       - run: yarn type-check
       - run: yarn lint
       - name: test with check
