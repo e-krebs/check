@@ -3,12 +3,5 @@
   "ts-node": {
     "transpileOnly": true,
     "transpiler": "ts-node/transpilers/swc-experimental"
-  },
-  "compilerOptions": {
-    "baseUrl": "src",
-    "rootDir": "src",
-  },
-  "include": [
-    "src"
-  ]
+  }
 }
