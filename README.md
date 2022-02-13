@@ -38,7 +38,7 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 
 | parameter | default value | meaning |
 |-|-|-|
-| `pattern` | `**/*.test.ts` | the pattern to get the test files to run |
+| `testFilesPattern` | `**/*.test.ts` | the pattern to get the test files to run |
 
 ## Other
 

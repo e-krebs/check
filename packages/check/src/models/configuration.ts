@@ -3,9 +3,9 @@ import { object, string, type infer as Infer } from 'zod';
 const defaultPattern = '**/*.test.ts';
 
 export const ConfigurationModel = object({
-  pattern: string().default(defaultPattern)
+  testFilesPattern: string().default(defaultPattern)
 }).default({
-  pattern: defaultPattern
+  testFilesPattern: defaultPattern
 });
 
 export type Configuration = Infer<typeof ConfigurationModel>;
