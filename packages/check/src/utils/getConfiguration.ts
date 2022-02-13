@@ -2,11 +2,12 @@ import { readFileSync, existsSync } from 'fs';
 import chalk from 'chalk';
 
 import { type Configuration, ConfigurationModel } from '../models/configuration';
+import { getArguments } from './getArguments';
 
 export const getConfiguration = (): Configuration => {
   let config: unknown = {};
 
-  const [configPath] = process.argv.slice(2);
+  const { configPath } = getArguments();
   const path = configPath ?? 'check.config.json';
   try {
     if (existsSync(path)) {
