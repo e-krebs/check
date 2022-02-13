@@ -7,6 +7,9 @@ on:
     tags-ignore:
       - 'v*.*.*'
 
+env:
+  FORCE_COLOR: 2
+
 jobs:
   test-and-lint:
     runs-on: ubuntu-latest
