@@ -1,4 +1,4 @@
-export const trimChar = (string: string, char: '\'' = '\''): string => {
+export const trimChar = (string: string, char = '\''): string => {
   // ^     beginning of the string
   // |     or
   // $     end of the string

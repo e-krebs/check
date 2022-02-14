@@ -19,6 +19,7 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn type-check
       - run: yarn lint
+      - run: yarn test
       - name: test with check
         env:
           FORCE_COLOR: 2

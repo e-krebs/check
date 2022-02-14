@@ -9,6 +9,7 @@
   },
   "scripts": {
     "type-check": "tsc --noEmit",
+    "test": "check",
     "lint": "eslint --ext .ts,.js src"
   },
   "bin": {
