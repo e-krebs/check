@@ -19,13 +19,16 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn type-check
       - run: yarn lint
-      - run: yarn test
-      - name: test with check
+      - name: test check with check itself
+        env:
+          FORCE_COLOR: 2
+        run: yarn test
+      - name: test examples with check
         env:
           FORCE_COLOR: 2
         run: yarn test:examples
         continue-on-error: true
-      - name: test with jest
+      - name: test examples with jest
         env:
           FORCE_COLOR: 2
         run: yarn jest:examples
