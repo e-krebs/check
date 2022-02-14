@@ -30,7 +30,7 @@ export const tasker = () => {
   });
 
   // watcher source file
-  const { watchFilesPattern, watchFilesIgnored } = getConfiguration();
+  const { watchFilesPattern, watchFilesIgnored } = getConfiguration(true);
   const watcher = watchFn(watchFilesPattern, {
     persistent: true,
     ignored: watchFilesIgnored
@@ -43,7 +43,7 @@ export const tasker = () => {
 };
 
 export const runTests = async (queue?: Queue) => {
-  const files = await globs();
+  const files = await globs(!queue);
   let outputLevel: OutputLevel = 'short';
 
   switch (files.length) {

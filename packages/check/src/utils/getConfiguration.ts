@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import { type Configuration, ConfigurationModel } from '../models/configuration';
 import { getArguments } from './getArguments';
 
-export const getConfiguration = (): Configuration => {
+export const getConfiguration = (log = false): Configuration => {
   let config: unknown = {};
 
   const { configPath } = getArguments();
@@ -13,7 +13,7 @@ export const getConfiguration = (): Configuration => {
     if (existsSync(path)) {
       const configFile = readFileSync(path, 'utf-8');
       config = JSON.parse(configFile);
-    } else {
+    } else if (log) {
       console.warn(chalk.yellowBright(
         `File ${chalk.bgYellowBright.black(path)} doesn't exist, using default configuration`
       ));

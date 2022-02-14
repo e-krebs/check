@@ -3,8 +3,8 @@ import Glob from 'fast-glob';
 
 import { getConfiguration } from '../utils/getConfiguration';
 
-export const globs = async (): Promise<string[]> => {
-  const { testFilesPattern } = getConfiguration();
+export const globs = async (log = false): Promise<string[]> => {
+  const { testFilesPattern } = getConfiguration(log);
   try {
     return await Glob(testFilesPattern);
   } catch (err) {
