@@ -12,7 +12,7 @@ export const executeRuns = (
 ): RunResult => {
   let output: string[] = [];
   const errors: RunError[] = [];
-  let globalSuccess = true;
+  let globalSuccess = runs.length > 0;
 
   for (const run of runs) {
     if (isBranch(run)) {
@@ -43,7 +43,7 @@ export const executeRuns = (
   }
 
   if (logicalPath.length <= 0) {
-    output = [formatFileResult(path, globalSuccess), ...output];
+    output = [formatFileResult(path, globalSuccess, runs.length <= 0), ...output];
   }
   return { output, details: { errors, success: globalSuccess } };
 };

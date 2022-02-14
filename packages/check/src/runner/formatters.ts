@@ -18,7 +18,7 @@ export const formatBranch = (depth: number, description: string, success?: boole
   return output.reduce((a, b) => `${a}${b}`);
 };
 
-export const formatFileResult = (path: string, success: boolean): string => {
+export const formatFileResult = (path: string, success: boolean, noTest = false): string => {
   const output: string[] = [];
   output.push(success
     ? chalk.greenBright.inverse(' PASS ')
@@ -27,6 +27,9 @@ export const formatFileResult = (path: string, success: boolean): string => {
   output.push(' ');
   output.push(chalk.grey(getFolders(path)));
   output.push(getFile(path));
+  if (noTest) {
+    output.push(chalk.redBright(' (no test found)'));
+  }
   return output.reduce((a, b) => `${a}${b}`);
 };
 
