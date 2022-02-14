@@ -11,7 +11,7 @@
   "scripts": {
     "type-check": "yarn workspaces run type-check",
     "lint": "yarn workspace check-core lint",
-    "jest": "yarn workspace check-examples jest",
-    "test": "yarn workspace check-examples test"
+    "jest:examples": "yarn workspace check-examples jest",
+    "test:examples": "yarn workspace check-examples test"
   }
 }

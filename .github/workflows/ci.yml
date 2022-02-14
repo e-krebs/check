@@ -22,10 +22,10 @@ jobs:
       - name: test with check
         env:
           FORCE_COLOR: 2
-        run: yarn test
+        run: yarn test:examples
         continue-on-error: true
       - name: test with jest
         env:
           FORCE_COLOR: 2
-        run: yarn jest
+        run: yarn jest:examples
         continue-on-error: true
