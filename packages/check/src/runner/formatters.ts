@@ -5,6 +5,7 @@ import { createReadStream } from 'fs';
 
 import { getFile, getFolders } from '../utils/pathHelper';
 import type { RunError } from './runTypings';
+import { isDetail } from './matchers';
 
 export const formatBranch = (depth: number, description: string, success?: boolean): string => {
   const output: string[] = [' '.repeat(depth * 2)];
@@ -89,8 +90,12 @@ const formatError = async (runError: RunError): Promise<string[]> => {
   let i = 0;
   for (const detail of runError.details) {
     output.push('');
-    output.push(`    ${detail.message}`);
-    output.push(formatDiff(detail.expected, detail.received));
+    if (isDetail(detail)) {
+      output.push(`    ${detail.message}`);
+      output.push(formatDiff(detail.expected, detail.received));
+    } else {
+      output.push(`    ${chalk.redBright(detail.error)}`);
+    }
     if (detail.line) {
       output.push('');
       output.push(...await formatCodeLines(runError.path, detail.line));

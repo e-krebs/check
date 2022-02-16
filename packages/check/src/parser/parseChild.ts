@@ -16,6 +16,7 @@ export const parseChild = (
   node.forEachChild(child => { children.push(child); });
 
   const code = node.getText(file);
+  const line = getOriginalLine(node, file, sourceMap);
 
   switch (node.kind) {
     case SyntaxKind.ImportDeclaration:
@@ -25,6 +26,7 @@ export const parseChild = (
       return {
         type: 'Code',
         code: [code],
+        lines: [line],
       };
     case SyntaxKind.CallExpression:
       // @ts-expect-error node typing does not exist yet
@@ -34,12 +36,13 @@ export const parseChild = (
             return {
               type: 'Test',
               code: [code],
-              lines: [getOriginalLine(node, file, sourceMap)],
+              lines: [line],
             };
           }
           return {
             type: 'Code',
             code: [code],
+            lines: [line],
           };
         case 512:
         case 513:

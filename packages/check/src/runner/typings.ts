@@ -16,6 +16,7 @@ export type Run = Branch | TestBranch;
 
 type Code = {
   code: string;
+  line: number | null;
 }
 export const isCode = (runParam: RunItem): runParam is Code =>
   (runParam as Code).code !== undefined;

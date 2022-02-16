@@ -8,7 +8,9 @@ export const linesToRuns = (lines: Line[], parents: RunItem[] = []): Run[] => {
   for (const line of lines) {
     switch (line.type) {
       case 'Code':
-        stack.push(...line.code.map(code => ({ code })));
+        for (let i = 0; i < line.code.length; i++) {
+          stack.push({ code: line.code[i], line: line.lines[i] ?? null });
+        }
         break;
       case 'Test':
         stack.push({ tests: line.code, lines: line.lines });

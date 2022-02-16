@@ -6,6 +6,7 @@ export interface DefaultLine {
 export interface CodeLine {
   type: 'Code';
   code: string[];
+  lines: (number | null)[];
 }
 export interface TestLine {
   type: 'Test';

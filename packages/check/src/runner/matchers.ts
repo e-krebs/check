@@ -2,17 +2,27 @@ import chalk from 'chalk';
 import isEqual from 'lodash/isEqual';
 
 type MatcherResultSuccess = { pass: true };
-export type FailDetail = {
+export type FailDetailLight = {
   message: string;
-  line: number | null;
   expected: object;
   received: object;
-}
-type MatcherResultFail<Fail extends object = FailDetail> = { pass: false, details: Fail[] };
+};
+export type FailDetail =  FailDetailLight & { line: number | null };
+export type FailError = {
+  error: unknown;
+  line: number | null;
+};
+export const isDetail = (fail: FailDetailLight | FailError): fail is FailDetailLight =>
+  Boolean((fail as FailDetailLight).message);
+
+type MatcherResultFail<Fail extends FailDetailLight = FailDetail> = {
+  pass: false,
+  details: (Fail | FailError)[]
+};
 
 export type MatcherResultWithoutLines =
   MatcherResultSuccess |
-  MatcherResultFail<Omit<FailDetail, 'line'>>;
+  MatcherResultFail<FailDetailLight>;
 export type MatcherResult = MatcherResultSuccess | MatcherResultFail;
 
 type MatcherFunction = (expected: object) => MatcherResultWithoutLines;
