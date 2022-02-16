@@ -65,17 +65,20 @@ const formatCodeLines = async (path: string, testLine: number): Promise<string[]
   return output;
 };
 
+const undefinedReplacement = 'undefinedReplacementString';
+
 const formatDiff = (expected: object, received: object): string => {
-  const diffs = diffJson(expected, received);
+  const diffs = diffJson(expected, received, { undefinedReplacement });
 
   const output: string[] = [];
   for (const diff of diffs) {
     const items = diff.value.split('\n');
     for (const item of items) {
       if (!item) continue;
-      if (diff.added) output.push(chalk.red(`\n  + ${item}`));
-      else if (diff.removed) output.push(chalk.green(`\n  - ${item}`));
-      else output.push(chalk.grey(`\n    ${item}`));
+      const itemAsString = item.replace(`"${undefinedReplacement}"`, 'undefined');
+      if (diff.added) output.push(chalk.red(`\n  + ${itemAsString}`));
+      else if (diff.removed) output.push(chalk.green(`\n  - ${itemAsString}`));
+      else output.push(chalk.grey(`\n    ${itemAsString}`));
     }
   }
 
