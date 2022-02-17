@@ -40,7 +40,7 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 |-|-|-|
 | `testFilesPattern` | `**/*.test.ts` | the pattern to get the test files to run |
 | `watchFilesPattern` | `**/*` | _(watch mode only)_ the pattern to get the files to watch |
-| `watchFilesIgnored` | `['node_modules', '.git']` | _(watch mode only)_ files or folder not to watch |
+| `watchFilesIgnored` | `['node_modules', '.git', '.swc', 'dist', 'out']` | _(watch mode only)_ files or folder not to watch |
 
 ## Other
 
