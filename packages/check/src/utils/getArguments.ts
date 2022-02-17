@@ -10,7 +10,6 @@ const optionsNames = ['watch'] as const;
 type OptionNames = typeof optionsNames[number];
 const optionArg = (name: OptionNames): `--${OptionNames}` => `${optionPrefix}${name}`;
 
-
 export const getArguments = (): Arguments => {
   const [...args] = process.argv.slice(2);
 
