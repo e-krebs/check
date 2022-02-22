@@ -1,4 +1,4 @@
-import { watch as watchFn } from 'chokidar';
+import { watch as watchFn, type FSWatcher } from 'chokidar';
 import Queue from 'better-queue';
 import chalk from 'chalk';
 
@@ -6,14 +6,24 @@ import { type OutputLevel } from '../utils/outputLevel';
 import { checkInWorker } from '../checkInWorker';
 import { globs } from './globs';
 import { getConfiguration } from '../utils/getConfiguration';
+import { filterFiles } from './filterFiles';
 
 interface QueueItem {
   path: string;
   outputLevel: OutputLevel;
 }
 
+// singleton
+export class Tasker {
+  static runningTasks: string[] = [];
+  static watcherIsOn = true;
+  static queue?: Queue;
+  static watcher?: FSWatcher;
+  static filter = '';
+}
+
 export const tasker = () => {
-  const queue = new Queue<QueueItem>(
+  Tasker.queue = new Queue<QueueItem>(
     ({ path, outputLevel }, cb) => {
       const { cancel, result } = checkInWorker(path, outputLevel);
       // task will be considered as finished when we call cb
@@ -24,27 +34,33 @@ export const tasker = () => {
     { cancelIfRunning: true, id: 'path' }
   );
 
-  queue.on('empty', () => {
+  Tasker.queue.on('empty', () => {
     console.log('');
     console.log(chalk.gray('Ran all tests.'));
+    console.log('');
+    console.log(chalk.gray(`press ${chalk.white('<f>')} to filter`));
+    console.log(chalk.gray(`press ${chalk.white('<ctrl> + <c>')} to exit`));
   });
 
   // watcher source file
   const { watchFilesPattern, watchFilesIgnored } = getConfiguration(true);
-  const watcher = watchFn(watchFilesPattern, {
+  Tasker.watcher = watchFn(watchFilesPattern, {
     persistent: true,
     ignored: watchFilesIgnored
   });
 
-  watcher
-    .on('add', async () => { await runTests(queue); })
-    .on('change', async () => { await runTests(queue); })
-    .on('unlink', async () => { await runTests(queue); });
+  Tasker.watcher
+    .on('add', async () => { await runTests(); })
+    .on('change', async () => { await runTests(); })
+    .on('unlink', async () => { await runTests(); });
 };
 
-export const runTests = async (queue?: Queue) => {
-  const files = await globs(!queue);
+export const runTests = async () => {
   let outputLevel: OutputLevel = 'short';
+  let files = await globs(!Tasker.queue);
+  if (Tasker.filter) {
+    files = filterFiles(files, Tasker.filter);
+  }
 
   switch (files.length) {
     case 0: {
@@ -60,12 +76,18 @@ export const runTests = async (queue?: Queue) => {
       break;
   }
 
-  if (queue) {
+  if (Tasker.queue) {
     // running asynchronously (through the queue)
     console.clear();
-    files.map(path => {
-      queue.push({ path, outputLevel });
-    });
+    if (Tasker.filter) {
+      console.log(chalk.gray(`  files filtered on: ${chalk.white(Tasker.filter)}\n`));
+    }
+    for (const path of files) {
+      Tasker.queue.push({ path, outputLevel });
+      if (!Tasker.runningTasks.includes(path)) {
+        Tasker.runningTasks.push(path);
+      }
+    }
   } else {
     // running synchronously
     const workers = files.map(file => checkInWorker(file, outputLevel));
