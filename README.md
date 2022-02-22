@@ -100,10 +100,11 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 - [x] watch (including code files changes with `chokidar`)
   - [x] watch & cancel running tests if necessary
   - [x] allow to configure watched files pattern & ignored files
-- [ ] on watch mode, allow to input a custom Regex (and see result live)
+- [x] on watch mode, allow to input a custom Regex (and see result live)
 - [ ] on watch mode, cache the runs extracted from the test files (based on file hash?)
 - [ ] don't use `jest` types but our own
-- [ ] mocks
+  - [ ] expect.toEqual should be generic in order to support type completion inside toEqual
+- [ ] mock & spy
 - [x] deal with multiple files
   - [x] accept a glob / pattern
   - [x] run multiple files in parallel
