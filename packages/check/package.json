@@ -29,6 +29,7 @@
     "chokidar": "^3.5.3",
     "diff": "^5.0.0",
     "dotenv": "^16.0.0",
+    "enquirer": "^2.3.6",
     "eslint": "^8.8.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
