@@ -18,6 +18,8 @@ export const checkInWorker = (file: string, outputLevel: OutputLevel): Worker =>
     { workerData: { file, outputLevel } }
   );
 
+  worker.setMaxListeners(Infinity);
+
   const result = new Promise<boolean>((resolve) => {
     let success = false;
 
