@@ -3,7 +3,7 @@ import { FailDetail, FailError } from './matchers';
 export interface RunError {
   path: string;
   logicalPath: string[];
-  details: (FailDetail | FailError)[]
+  details: (FailDetail<object> | FailError)[]
 }
 
 export interface RunDetails {
