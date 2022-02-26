@@ -1,4 +1,5 @@
 {
+  "files": ["packages/check/typings/index.d.ts"],
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",

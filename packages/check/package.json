@@ -7,6 +7,7 @@
   "engines": {
     "node": ">= 17"
   },
+  "types": "typings/index.d.ts",
   "scripts": {
     "type-check": "tsc --noEmit",
     "test": "check",

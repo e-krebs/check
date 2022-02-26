@@ -102,8 +102,8 @@ You can then run the test using this new framework with `yarn check` → 1 test 
   - [x] allow to configure watched files pattern & ignored files
 - [x] on watch mode, allow to input a custom Regex (and see result live)
 - [ ] on watch mode, cache the runs extracted from the test files (based on file hash?)
-- [ ] don't use `jest` types but our own
-  - [ ] expect.toEqual should be generic in order to support type completion inside toEqual
+- [x] don't use `jest` types but our own
+  - [x] expect.toEqual should be generic in order to support type completion inside toEqual
 - [ ] mock & spy
 - [x] deal with multiple files
   - [x] accept a glob / pattern
