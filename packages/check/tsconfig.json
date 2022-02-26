@@ -5,6 +5,11 @@
     "transpiler": "ts-node/transpilers/swc-experimental"
   },
   "compilerOptions": {
-    "typeRoots": ["typings", "../../node_modules/@types"]
-  }
+    "baseUrl": "src",
+    "rootDir": "src",
+  },
+  "include": [
+    "src",
+    "typings"
+  ],
 }
