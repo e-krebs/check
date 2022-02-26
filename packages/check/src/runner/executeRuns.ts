@@ -30,7 +30,7 @@ export const executeRuns = (
       errors.push(...runResult.details.errors);
     }
     if (isTestBranch(run)) {
-      const runResult = executeRunItems(run, path);
+      const runResult = executeRunItems<object>(run, path);
       if (outputLevel === 'detailed') {
         output.push(formatBranch(logicalPath.length + 1, run.description, runResult.pass));
       }
