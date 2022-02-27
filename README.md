@@ -5,6 +5,7 @@ Check is a **personal** project for now.
 It is very raw and undocumented at this stage.
 
 It's an exploration at writing a test framework that addresses some of `jest`'s shortcomings (imho):
+- when multiple tests fail in a block, you only see the first one
 - the automatic hoisting of imports and mocks
   - this makes it difficult to write you own helpers on top of `jest`
 - the need to use `beforeEach` / `afterEach` ([detailed explanation here](./examples/BEFOREEACH.md))
@@ -42,16 +43,59 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 | `watchFilesPattern` | `**/*` | _(watch mode only)_ the pattern to get the files to watch |
 | `watchFilesIgnored` | `['node_modules', '.git', '.swc', 'dist', 'out']` | _(watch mode only)_ files or folder not to watch |
 
-## Other
+## Watch mode
+In watch mode, tests are re-run every time you save a file.
 
-- tests are run synchronously (no watch mode yet)
+> - If only one test file is run, you'll see this file full test tree (and individual status) in your terminal
+> - If more than one test file is run, you'll see only the global status for each test file
+> - In both cases, you'll see details for failing tests _(see examples below)_
+
+You also have access to additional functionalities as described in your terminal:
+```sh
+Ran all tests.
+
+press <f> to filter
+press <ctrl> + <c> to exit
+```
+- pressing <kbd>ctrl</kbd> + <kbd>c</kbd> will stop the watch mode and exit
+- pressing <kbd>f</kbd> will allow you to enter a **filter** on which tests to run. You'll see a live list of files affected by your filter.
+![filter](./images/filter.png)
+  - once you press <kbd>enter</kbd>, only those tests will be run (still on watch mode)
+  - you can later press <kbd>f</kbd> again to change that filter (entering nothing runs all tests)
+
+## Test files & running them
+### general
 - in test files
   - accepts `describe` and `it` / `test` syntax
-  - `toEqual` matcher (uses `lodash`)
-  - `not` function
+  - **standard matcher** are available:
+    - `toEqual` matcher (uses `lodash`)
+    - `not` function
+  - accepts `spy` definition & exposes related **spy matchers** (cf. section below)
 - prints the result in the console (using `chalk`)
   - if only one test file, prints global result (PASS/FAIL), detailed tests tree & errors
   - if multiple test files, prints global result (PASS/FAIL) & errors for each file (no detailed tests tree)
+  - in both cases, in case of errors, `check` continues to run tests and show all tests that are failing, not just the first one
+
+### spy
+you can defined a spy by specifying the module & declaration you want to spy:
+```ts
+const spyExistsSync = spy('fs', 'existsSync')
+```
+optionally, you can add typing to your spy function:
+```ts
+import { type existsSync } from 'fs';
+
+const spyExistsSync = spy<typeof existsSync>('fs', 'existsSync');
+```
+
+Regular matchers don't work on spy function, instead, they have their dedicated set of spy matchers. So far:
+- `toBeCalledTimes` matcher (will compare the number in parameter with the spy function inner counter)
+
+> A note about typings:
+>
+> `check`'s types are smart enough so that depending on the parameter passed to the `it`/`test` function:
+>  - if this parameter is a spy functions, only spy matchers are available (not standard matchers)
+>  - if this parameter is not a spy function, only standard matchers are available (not spy matchers)
 
 ## example of test outputs
 | multiple files | single file (PASS) | single file (FAIL) |
@@ -86,7 +130,10 @@ You can then run the test using this new framework with `yarn check` → 1 test 
     - using a brand new context for each run to avoid side-effects
     - output a result in the console (cf. images above)
 
-## diagram
+## Diagram
+> This diagram describes how tests are running without the watch mode.
+>
+> TBD: describe how watch mode works internally
 
 ```mermaid
 flowchart TD
