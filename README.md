@@ -151,6 +151,8 @@ flowchart TD
 - [x] don't use `jest` types but our own
   - [x] expect.toEqual should be generic in order to support type completion inside toEqual
 - [ ] mock & spy
+  - [ ] spy
+  - [ ] mock
 - [x] deal with multiple files
   - [x] accept a glob / pattern
   - [x] run multiple files in parallel
@@ -161,5 +163,5 @@ flowchart TD
 - [ ] write recap at the end (nb test suites, nb tests, time, etc.)
 - [ ] publish a package
 - [ ] deal with React specificities: props, etc.
-- [ ] dev experience: can interactively set pattern, etc.
+- [x] dev experience: can interactively set pattern, etc.
 - [x] only write debug json files when env var set
