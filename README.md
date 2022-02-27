@@ -67,6 +67,7 @@ You can then run the test using this new framework with `yarn check` → 1 test 
 | all tests pass ✔ | one test fail ❌ |
 
 # how it works (for now)
+## description
 - the whole thing is written in **Typescript** and runs using `ts-node` (with the currently experimental `@swc` transpiler for performance)
 - it works on **Typescript** test files (usually `xxxx.test.ts`)
 - each file is handled in its own thread using node's [`worker_thread`](https://nodejs.org/api/worker_threads.html)
@@ -84,6 +85,51 @@ You can then run the test using this new framework with `yarn check` → 1 test 
     - using the **node vm**
     - using a brand new context for each run to avoid side-effects
     - output a result in the console (cf. images above)
+
+## diagram
+
+```mermaid
+flowchart TD
+  A[get test files] --> B(("one worker_thread\n per file"))
+  B --> |test file 1| C1["read (utf-8)"]
+  B --> |test file 2| C2["read (utf-8)"]
+  subgraph parser
+    direction LR
+    subgraph file 1
+      C1 --> D1[transpile\nusing Typescript]
+      D1 --> E1["parse file tree\ninto a Line[]"]
+    end
+    subgraph file 2
+      C2 --> D2[transpile\nusing Typescript]
+      D2 --> E2["parse file tree\ninto a Line[]"]
+    end
+  end
+  subgraph runner
+    subgraph file 1
+      E1 --> F1["transform\ninto Run[]"]
+      F1 --> G1A["execute\nRun 1"]
+      F1 --> G1B["..."]
+      F1 --> G1C["execute\nRun n"]
+      G1A --> H1["aggregate\nRun[] results"]
+      G1B --> H1["aggregate\nRun[] results"]
+      G1C --> H1["aggregate\nRun[] results"]
+    end
+    subgraph file 2
+      E2 --> F2["transform\ninto Run[]"]
+      F2 --> G2A["execute\nRun 1"]
+      F2 --> G2B["..."]
+      F2 --> G2C["execute\nRun n"]
+      G2A --> H2["aggregate\nRun[] results"]
+      G2B --> H2["aggregate\nRun[] results"]
+      G2C --> H2["aggregate\nRun[] results"]
+    end
+  end
+  H1 --> W[aggregate results]
+  H2 --> W[aggregate results]
+  W --> X{success}
+  X --> |Yes| Y[Exit with status 0]
+  X --> |No| Z[Exit with status 1]
+```
 
 # .env
 | name | meaning |
