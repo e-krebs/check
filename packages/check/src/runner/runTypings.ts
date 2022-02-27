@@ -1,9 +1,9 @@
-import { FailDetail, FailError } from './matchers';
+import { FailDetail, FailError } from './matchersTyping';
 
 export interface RunError {
   path: string;
   logicalPath: string[];
-  details: (FailDetail<object> | FailError)[]
+  details: (FailDetail | FailError)[]
 }
 
 export interface RunDetails {

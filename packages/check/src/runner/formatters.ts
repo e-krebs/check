@@ -1,11 +1,10 @@
 import chalk from 'chalk';
-import { diffJson } from 'diff';
 import readline from 'node:readline';
 import { createReadStream } from 'fs';
 
 import { getFile, getFolders } from '../utils/pathHelper';
 import type { RunError } from './runTypings';
-import { isDetail } from './matchers';
+import { isDetail } from './matchersTyping';
 
 export const formatBranch = (depth: number, description: string, success?: boolean): string => {
   const output: string[] = [' '.repeat(depth * 2)];
@@ -65,26 +64,6 @@ const formatCodeLines = async (path: string, testLine: number): Promise<string[]
   return output;
 };
 
-const undefinedReplacement = 'undefinedReplacementString';
-
-const formatDiff = (expected: object, received: object): string => {
-  const diffs = diffJson(expected, received, { undefinedReplacement });
-
-  const output: string[] = [];
-  for (const diff of diffs) {
-    const items = diff.value.split('\n');
-    for (const item of items) {
-      if (!item) continue;
-      const itemAsString = item.replace(`"${undefinedReplacement}"`, 'undefined');
-      if (diff.added) output.push(chalk.red(`\n  + ${itemAsString}`));
-      else if (diff.removed) output.push(chalk.green(`\n  - ${itemAsString}`));
-      else output.push(chalk.grey(`\n    ${itemAsString}`));
-    }
-  }
-
-  return output.reduce((a, b) => `${a}${b}`);
-};
-
 const formatError = async (runError: RunError): Promise<string[]> => {
   const output: string[] = [];
   const logicalPath = runError.logicalPath.reduce((a, b) => `${a} > ${b}`);
@@ -95,7 +74,9 @@ const formatError = async (runError: RunError): Promise<string[]> => {
     output.push('');
     if (isDetail(detail)) {
       output.push(`    ${detail.message}`);
-      output.push(formatDiff(detail.expected, detail.received));
+      if (detail.diff.length > 0) {
+        output.push('', ...detail.diff);
+      }
     } else {
       output.push(`    ${chalk.redBright(detail.error)}`);
     }

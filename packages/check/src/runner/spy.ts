@@ -3,8 +3,13 @@ import { ModulesRegistry } from './modules';
 type FunctionType<U extends Array<unknown>, V> = (...args: U) => V;
 
 interface SpyProperties {
+  isSpy: true;
   calls: number;
 }
+
+export const isSpy = <T>(
+  object: T
+): object is T & SpyProperties => (object as T & SpyProperties).isSpy === true;
 
 declare class Spy<U extends Array<unknown>, V> {
   constructor(module: FunctionType<U, V>);
@@ -14,13 +19,16 @@ function Spy<U extends Array<unknown>, V>(
   this: SpyProperties, module: FunctionType<U, V>
 ): FunctionType<U, V> {
   this.calls = 0;
-  
+  this.isSpy = true;
+
   const spy: FunctionType<U, V> = (...props: U): V => {
     this.calls++;
     return module(...props);
   };
-  Object.defineProperty(spy, 'calls', {
-    get: () => this.calls,
+
+  Object.defineProperties(spy, {
+    calls:  { get: () => this.calls },
+    isSpy:  { get: () => this.isSpy },
   });
   return spy as FunctionType<U, V> & SpyProperties;
 }
@@ -39,6 +47,6 @@ export const spy = <T = UnknownFunction>(
   if (!(modulePath in ModulesRegistry.spies)) {
     ModulesRegistry.spies[modulePath] = {};
   }
-  ModulesRegistry.spies[modulePath][declarationPath] = spyFunction ;
+  ModulesRegistry.spies[modulePath][declarationPath] = spyFunction;
   return spyFunction as T & SpyProperties;
 };

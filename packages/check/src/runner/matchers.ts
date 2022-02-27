@@ -1,36 +1,46 @@
 import chalk from 'chalk';
+import { Change, diffJson } from 'diff';
 import isEqual from 'lodash/isEqual';
 
-type MatcherResultSuccess = { pass: true };
-export type FailDetailLight<T> = {
-  message: string;
-  expected: T;
-  received: T;
-};
-export type FailDetail<T> = FailDetailLight<T> & { line: number | null };
-export type FailError = {
-  error: unknown;
-  line: number | null;
-};
-export const isDetail = <T>(fail: FailDetailLight<T> | FailError): fail is FailDetailLight<T> =>
-  Boolean((fail as FailDetailLight<T>).message);
+import { MatcherFunction, MatcherResultWithoutLines } from './matchersTyping';
+import { isSpy } from './spy';
 
-type MatcherResultFail<T, Fail extends FailDetailLight<T> = FailDetail<T>> = {
-  pass: false,
-  details: (Fail | FailError)[]
-};
-
-export type MatcherResultWithoutLines<T> =
-  MatcherResultSuccess |
-  MatcherResultFail<T, FailDetailLight<T>>;
-export type MatcherResult<T> = MatcherResultSuccess | MatcherResultFail<T>;
-
-type MatcherFunction<T> = (expected: T) => MatcherResultWithoutLines<T>;
 type MatcherName = 'toEqual';
 type Matchers<T> = Record<MatcherName, MatcherFunction<T>>;
+type MatchersOrNever<T> = T extends SpyProperties ? Record<string, never> : Matchers<T>;
 
 const matcherDescription: Record<MatcherName, string> = {
   toEqual: 'deep equality',
+};
+
+const diffScore = (change: Change): number => {
+  if (change.added) return 3;
+  if (change.removed) return 2;
+  return 1;
+};
+
+const undefinedReplacement = 'undefinedReplacementString';
+
+const formatDiff = <T>(expected: T, received: T): string[] => {
+  const output: string[] = [];
+
+  const diffs = diffJson(
+    expected as unknown as object,
+    received as unknown as object,
+    { undefinedReplacement }
+  ).sort((a, b) => diffScore(b) - diffScore(a));
+
+  for (const diff of diffs) {
+    const items = diff.value.split('\n');
+    for (const item of items) {
+      if (!item) continue;
+      const itemAsString = item.replace(`"${undefinedReplacement}"`, 'undefined');
+      if (diff.added) output.push(chalk.red(` + ${itemAsString} `));
+      else if (diff.removed) output.push(chalk.green(` - ${itemAsString} `));
+      else output.push(chalk.grey(`    ${itemAsString} `));
+    }
+  }
+  return output;
 };
 
 const matcherMessage = (name: MatcherName, not = false): string => {
@@ -38,39 +48,39 @@ const matcherMessage = (name: MatcherName, not = false): string => {
   const fullName = chalk.white(`${not ? '.not' : ''}.${name}`);
   const expected = chalk.green('expected');
   const description = ` // ${matcherDescription[name]}`;
-  return chalk.grey(`expect(${expected})${fullName}(${received})${description}`);
+  return chalk.grey(`expect(${received})${fullName}(${expected})${description}`);
 };
 
-export const matchers = <T>(received: T): Matchers<T> => ({
-  toEqual: (expected: T): MatcherResultWithoutLines<T> => {
-    const pass = isEqual(received, expected);
-    if (pass) return { pass: true };
-    return {
-      pass: false,
-      details: [{
-        message: matcherMessage('toEqual'),
-        expected,
-        received,
-      }]
-    };
-  }
-});
+export const matchers = <T>(received: T): MatchersOrNever<T> => isSpy(received)
+  ? {} as MatchersOrNever<T>
+  : ({
+    toEqual: (expected: T): MatcherResultWithoutLines => {
+      const pass = isEqual(received, expected);
+      if (pass) return { pass: true };
+      return {
+        pass: false,
+        details: [{
+          message: matcherMessage('toEqual'),
+          diff: formatDiff(expected, received),
+        }]
+      };
+    }
+  }) as MatchersOrNever<T>;
 
-export const not = <T>(matchers: Matchers<T>): Matchers<T> => {
-  const notMatchers: Partial<Matchers<T>> = {};
+export const not = <T>(matchers: MatchersOrNever<T>): MatchersOrNever<T> => {
+  const notMatchers: Partial<MatchersOrNever<T>> = {};
   for (const matcherName in matchers) {
     notMatchers[(matcherName as MatcherName)] = (expected: T) => {
-      const pass = !matchers[matcherName as MatcherName](expected);
+      const pass = !(matchers as Matchers<T>)[matcherName as MatcherName](expected);
       if (pass) return { pass: true };
       return {
         pass: false,
         details: [{
           message: matcherMessage('toEqual', true),
-          expected,
-          received: expected,
+          diff: formatDiff(expected, {}),
         }]
       };
     };
   }
-  return notMatchers as Matchers<T>;
+  return notMatchers as MatchersOrNever<T>;
 };

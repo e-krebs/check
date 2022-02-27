@@ -5,8 +5,16 @@ interface Matchers<T> {
   toEqual(expected: T): void;
 }
 
+interface NotMatchers<T> {
+  not: Matchers<T>;
+}
+
+interface SpyMatchers {
+  toBeCalledTimes: (expected: number) => void;
+}
+
 interface SpyProperties {
-  calls: number;
+  isSpy: true;
 }
 
 interface Describe {
@@ -18,7 +26,7 @@ interface It {
 }
 
 interface Expect {
-  <T = unknown>(actual: T): Matchers<T>;
+  <T = unknown>(actual: T): T extends SpyProperties ? SpyMatchers : Matchers<T> & NotMatchers<T>;
 }
 
 interface Spy {
