@@ -2,9 +2,14 @@ import { ModulesRegistry } from './modules';
 
 type FunctionType<U extends Array<unknown>, V> = (...args: U) => V;
 
+export interface SpyCall {
+  args: unknown[];
+  returns: unknown;
+}
+
 interface SpyProperties {
   isSpy: true;
-  calls: number;
+  calls: SpyCall[];
 }
 
 export const isSpy = <T>(
@@ -18,12 +23,13 @@ declare class Spy<U extends Array<unknown>, V> {
 function Spy<U extends Array<unknown>, V>(
   this: SpyProperties, module: FunctionType<U, V>
 ): FunctionType<U, V> {
-  this.calls = 0;
+  this.calls = [];
   this.isSpy = true;
 
-  const spy: FunctionType<U, V> = (...props: U): V => {
-    this.calls++;
-    return module(...props);
+  const spy: FunctionType<U, V> = (...args: U): V => {
+    const returns = module(...args);
+    this.calls.push({ args, returns });
+    return returns;
   };
 
   Object.defineProperties(spy, {
@@ -36,7 +42,7 @@ function Spy<U extends Array<unknown>, V>(
 type UnknownFunction = (...args: unknown[]) => unknown
 
 export { Spy };
-export const spy = <T = UnknownFunction>(
+export const spy = <T extends UnknownFunction = UnknownFunction>(
   modulePath: string,
   declarationPath: string
 ) => {

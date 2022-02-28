@@ -9,8 +9,8 @@ interface NotMatchers<T> {
   not: Matchers<T>;
 }
 
-interface SpyMatchers {
-  toBeCalledTimes: (expected: number) => void;
+interface SpyMatchers<T extends UnknownFunction> {
+  toBeCalled: (expected: number, args?: Partial<Parameters<T>>) => void;
 }
 
 interface SpyProperties {
@@ -26,7 +26,7 @@ interface It {
 }
 
 interface Expect {
-  <T = unknown>(actual: T): T extends SpyProperties ? SpyMatchers : Matchers<T> & NotMatchers<T>;
+  <T = unknown>(actual: T): T extends SpyProperties ? SpyMatchers<T> : Matchers<T> & NotMatchers<T>;
 }
 
 interface Spy {

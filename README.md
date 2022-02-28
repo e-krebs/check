@@ -89,7 +89,10 @@ const spyExistsSync = spy<typeof existsSync>('fs', 'existsSync');
 ```
 
 Regular matchers don't work on spy function, instead, they have their dedicated set of spy matchers. So far:
-- `toBeCalledTimes` matcher (will compare the number in parameter with the spy function inner counter)
+- `toBeCalled` matcher (will compare the number in parameter with the spy function inner counter)
+  - first argument is the number of calls to match
+  - second argument (optional) is an array of parameters to match (match, not equal)
+  - if both are provided, it will succeed if the function has been called X times with arguments matching those provided
 
 > A note about typings:
 >

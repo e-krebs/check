@@ -24,3 +24,5 @@ export type MatcherResultWithoutLines =
 export type MatcherResult = MatcherResultSuccess | MatcherResultFail;
 
 export type MatcherFunction<T> = (expected: T) => MatcherResultWithoutLines;
+export type MatcherWithArgsFunction<T, U extends unknown[]> =
+  (expected: T, args: U) => MatcherResultWithoutLines;
