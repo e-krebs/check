@@ -6,6 +6,13 @@ const moduleLoad = Module._load;
 type ModuleDeclarations = Record<string, unknown>;
 type Modules = Record<string, ModuleDeclarations>;
 export class ModulesRegistry {
+  constructor() {
+    // clear spies cache
+    ModulesRegistry.spies = {};
+    // clear node inner module cache
+    Module._cache = {};
+  }
+
   static spies: Modules = {};
 }
 
@@ -18,7 +25,7 @@ export const resolvedRequire = (path: string): NodeRequire => {
     Module._load = (request, parent, isMain) => {
       const loadedModule = moduleLoad(request, parent, isMain);
       if (request in ModulesRegistry.spies) {
-        return {...loadedModule, ...ModulesRegistry.spies[request] };
+        return { ...loadedModule, ...ModulesRegistry.spies[request] };
       }
       return loadedModule;
     };

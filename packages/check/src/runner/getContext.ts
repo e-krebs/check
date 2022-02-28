@@ -1,4 +1,3 @@
-import { Module } from 'module';
 import { createContext, type Context } from 'vm';
 
 import { matchers, not } from './matchers';
@@ -19,9 +18,7 @@ export const getContext = (path: string): Context => {
     }),
     spy,
   });
-  // clear spies cache
-  ModulesRegistry.spies = {};
-  // clear node inner module cache
-  Module._cache = {};
+  // clear caches
+  new ModulesRegistry();
   return context;
 };
