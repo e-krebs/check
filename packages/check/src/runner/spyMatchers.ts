@@ -80,10 +80,12 @@ interface CallsValidation {
 const validateCalls = <U extends unknown[]>(
   times: number, calls: SpyCall[], args: U
 ): CallsValidation => {
-  const validations: boolean[] = calls.map(call => validateCall<U>(call, args));
+  const validations: boolean[] = calls
+    .map(call => validateCall<U>(call, args))
+    .filter(success => success);
   switch (validations.length) {
     case 0:
-      return { pass: false, timesPassed: 0 };
+      return { pass: times === 0, timesPassed: 0 };
     case 1: {
       const valid = validations[0];
       return {
