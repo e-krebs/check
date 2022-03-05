@@ -4,12 +4,12 @@ import { matchers, not } from './matchers';
 import { ModulesRegistry, resolvedRequire } from './modules';
 import { spy } from './spy';
 import { spyMatchers } from './spyMatchers';
+import { getFolders } from '../utils/pathHelper';
 
 export const getContext = (path: string): Context => {
   const context = createContext({
     require: resolvedRequire(path),
     exports,
-    console,
     process,
     expect: <T>(received: T) => ({
       not: not(matchers(received)),
@@ -19,6 +19,6 @@ export const getContext = (path: string): Context => {
     spy,
   });
   // clear caches
-  new ModulesRegistry();
+  new ModulesRegistry(getFolders(path));
   return context;
 };

@@ -100,6 +100,8 @@ Regular matchers don't work on spy function, instead, they have their dedicated 
 >  - if this parameter is a spy functions, only spy matchers are available (not standard matchers)
 >  - if this parameter is not a spy function, only standard matchers are available (not spy matchers)
 
+[See dedicated doc](./SPY.md) for more advanced information about the `spy` function.
+
 ## example of test outputs
 | multiple files | single file (PASS) | single file (FAIL) |
 |-|-|-|

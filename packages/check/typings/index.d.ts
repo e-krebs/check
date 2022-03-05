@@ -30,7 +30,11 @@ interface Expect {
 }
 
 interface Spy {
-  <T = UnknownFunction>(modulePath: string, declarationPath: string): T & SpyProperties;
+  <T = UnknownFunction>(
+    modulePath: string | 'global',
+    declarationPath: string | string[],
+    thisPath?: string | string[]
+  ): T & SpyProperties;
 }
 
 declare const describe: Describe;
@@ -38,3 +42,4 @@ declare const it: It;
 declare const test: It;
 declare const expect: Expect;
 declare const spy: Spy;
+declare const __testFileDirname: string;
