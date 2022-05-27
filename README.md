@@ -213,7 +213,7 @@ flowchart TD
 - [x] read config instead of cli arguments
 - [x] expose commands to be used from the outside: `check example`
 - [ ] write recap at the end (nb test suites, nb tests, time, etc.)
-- [ ] publish a package
+- [x] publish a package
 - [ ] deal with React specificities: props, etc.
 - [x] dev experience: can interactively set pattern, etc.
 - [x] only write debug json files when env var set
