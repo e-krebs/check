@@ -35,5 +35,4 @@ jobs:
       - run: yarn --frozen-lockfile
       - name: create .npmrc file
         run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
-      - run: cd packages/check
-      - run: npm publish --access public --tag alpha
+      - run: cd packages/check && npm publish --access public --tag alpha
