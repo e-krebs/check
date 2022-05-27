@@ -1,0 +1,40 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: get semantic release info
+        run: echo new_release_version=${GITHUB_REF:11} >> $GITHUB_ENV
+      - name: get package version
+        id: package
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'packages/check/package.json'
+          prop_path: 'version'
+      - name: check package version
+        if: ${{ steps.package.outputs.prop != env.new_release_version }}
+        run: |
+          echo "invalid package version, expected: ${{env.new_release_version}}, got: ${{steps.package.outputs.prop}}"
+          exit 1
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn --frozen-lockfile
+      - run: yarn build
+      - name: create .npmrc file
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >> .npmrc
+      - run: cd packages/check
+      - run: npm publish --access public --tag alpha
