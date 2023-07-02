@@ -5,7 +5,7 @@
   "author": "Emmanuel Krebs <e-krebs@users.noreply.github.com>",
   "license": "MIT",
   "engines": {
-    "node": ">= 17"
+    "node": ">= 18"
   },
   "types": "typings/index.d.ts",
   "scripts": {
@@ -18,28 +18,28 @@
   },
   "devDependencies": {
     "@types/better-queue": "^3.8.3",
-    "@types/diff": "^5.0.2",
-    "@types/glob": "^7.2.0",
-    "@types/lodash": "^4.14.178",
-    "@types/node": "^17.0.15",
+    "@types/diff": "^5.0.3",
+    "@types/glob": "^8.1.0",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "^18.0.0",
     "@types/source-map": "^0.5.7",
-    "@typescript-eslint/eslint-plugin": "^5.10.2",
-    "@typescript-eslint/parser": "^5.10.2",
-    "better-queue": "^3.8.10",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "better-queue": "^3.8.12",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
-    "diff": "^5.0.0",
-    "dotenv": "^16.0.0",
+    "diff": "^5.1.0",
+    "dotenv": "^16.3.1",
     "enquirer": "^2.3.6",
-    "eslint": "^8.8.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-react": "^7.28.0",
-    "fast-glob": "^3.2.11",
+    "eslint": "^8.44.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-react": "^7.32.2",
+    "fast-glob": "^3.3.0",
     "lodash": "^4.17.21",
-    "source-map": "^0.7.3",
+    "source-map": "^0.7.4",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5",
-    "zod": "^3.11.6"
+    "zod": "^3.21.4"
   }
 }

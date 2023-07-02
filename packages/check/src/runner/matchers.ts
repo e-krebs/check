@@ -31,7 +31,7 @@ const sortChanges = (changes: Change[]): Change[] => {
 
 const undefinedReplacement = 'undefinedReplacementString';
 
-const formatDiff = <T>(expected: T, received: T): string[] => {
+const formatDiff = <T>(expected: T, received: Partial<T>): string[] => {
   const output: string[] = [];
 
   const diffs = diffJson(
