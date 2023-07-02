@@ -14,5 +14,8 @@
     "test": "yarn workspace check-core test",
     "jest:examples": "yarn workspace check-examples jest",
     "test:examples": "yarn workspace check-examples test"
+  },
+  "resolutions": {
+    "**/semver": "^7.5.2"
   }
 }
